@@ -4,6 +4,8 @@ import * as todoController from "./controllers/todoController";
 const app: Application = express();
 const port = process.env.PORT || 8000;
 
+app.use(express.json());
+
 app.get("/", todoController.todos_get);
 app.get("/todos", todoController.todos_get);
 app.get("/todos/:uuid", todoController.todos_get_todo);
