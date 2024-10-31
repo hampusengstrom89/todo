@@ -1,12 +1,12 @@
 import { readFileSync as load, writeFileSync as save } from "fs";
 
-import { Todo } from "../interfaces/TodoInterface";
+import { IFTodo } from "../interfaces/TodoInterface";
 import { byDueDate } from "../utils";
 
-const PATH = "../storage/todos.json";
+const PATH = "./storage/todos.json";
 
-const loadTodos = (): Todo[] => JSON.parse(load(PATH, "utf8"));
-const storeTodos = (todos: Todo[]): void => save(PATH, JSON.stringify(todos));
+const loadTodos = (): IFTodo[] => JSON.parse(load(PATH, "utf8"));
+const storeTodos = (todos: IFTodo[]): void => save(PATH, JSON.stringify(todos));
 
 /*
  *
@@ -18,11 +18,7 @@ const storeTodos = (todos: Todo[]): void => save(PATH, JSON.stringify(todos));
  *
  */
 
-export const createTodo = (todo: Todo): Todo | undefined => {
-  if (!todo) {
-    return;
-  }
-
+export const createTodo = (todo: IFTodo): IFTodo => {
   const todos = loadTodos();
 
   todos.push(todo);
@@ -42,10 +38,10 @@ export const createTodo = (todo: Todo): Todo | undefined => {
  *
  */
 
-export const removeTodo = (uuid: Todo["uuid"]): Todo | null => {
+export const removeTodo = (uuid: IFTodo["uuid"]): IFTodo | null => {
   const todos = loadTodos();
 
-  const index = todos.findIndex((todo: Todo) => todo.uuid === uuid);
+  const index = todos.findIndex((todo: IFTodo) => todo.uuid === uuid);
 
   if (index < 0) {
     return null;
@@ -69,7 +65,7 @@ export const removeTodo = (uuid: Todo["uuid"]): Todo | null => {
  *
  */
 
-export const getTodos = (offset: number, limit: number): Todo[] => {
+export const getTodos = (offset: number, limit: number): IFTodo[] => {
   const todos = loadTodos();
   if (!todos || todos.length === 0) {
     return [];
@@ -83,17 +79,13 @@ export const getTodos = (offset: number, limit: number): Todo[] => {
  * Gets a single todo item
  *
  * @param uuid The uuid of todo item to be returned.
- * @return The todo item with matching uuid, undefined if no uuid is specified, null if no match is found
+ * @return The todo item with matching uuid, null if no match is found
  *
  */
-export const getTodo = (uuid: Todo["uuid"]): Todo | null | undefined => {
+export const getTodo = (uuid: IFTodo["uuid"]): IFTodo | null => {
   const todos = loadTodos();
 
-  if (!uuid) {
-    return;
-  }
-
-  const match = todos.find((todo: Todo) => todo.uuid === uuid);
+  const match = todos.find((todo: IFTodo) => todo.uuid === uuid);
 
   if (!match) {
     return null;
@@ -108,21 +100,16 @@ export const getTodo = (uuid: Todo["uuid"]): Todo | null | undefined => {
  *
  * @param uuid The uuid of todo item to be updated.
  * @param todo The new todo item to replace the previous one.
- * @return The new todo item if successful update, null if the todo item referenced by uuid is not found, undefined if uuid or todo is not specified
+ * @return The new todo item if successful update, null if the todo item referenced by uuid is not found
  *
  */
 
 export const updateTodo = (
-  uuid: Todo["uuid"],
-  todo: Todo
-): Todo | null | undefined => {
+  uuid: IFTodo["uuid"],
+  todo: IFTodo
+): IFTodo | null => {
   const todos = loadTodos();
-
-  if (!uuid || !todo) {
-    return;
-  }
-
-  const index = todos.findIndex((todo: Todo) => todo.uuid === uuid);
+  const index = todos.findIndex((todo: IFTodo) => todo.uuid === uuid);
   if (index < 0) {
     return null;
   }
