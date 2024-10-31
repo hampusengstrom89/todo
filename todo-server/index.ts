@@ -4,11 +4,8 @@ import * as todoController from "./controllers/todoController";
 const app: Application = express();
 const port = process.env.PORT || 8000;
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome to Express & TypeScript Server");
-});
-
-app.get("/todos", todoController.todos_get_todos);
+app.get("/", todoController.todos_get);
+app.get("/todos", todoController.todos_get);
 app.get("/todos/:uuid", todoController.todos_get_todo);
 
 app.post("/todos", todoController.todos_create);
