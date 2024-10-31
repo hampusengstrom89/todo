@@ -44,7 +44,7 @@ export const todos_create = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void => {
   const title: string = req.body.title as string;
   const description: string = req.body.description as string;
   const completed: boolean = req.body.completed === "true";
@@ -72,7 +72,7 @@ export const todos_update = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void => {
   const uuid: string = req.query.uuid as string;
 
   const title: string = req.body.title as string;
@@ -104,7 +104,7 @@ export const todos_delete = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void => {
   const uuid: string = req.query.uuid as string;
 
   if (!uuid) {
