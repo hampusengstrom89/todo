@@ -1,9 +1,19 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactElement,
+} from 'react';
 import * as api from '../../api';
 
-const TodoContext = createContext({});
+const TodoContext = createContext({ todos: [] });
 
-const TodoProvider = ({ children }: any) => {
+const TodoProvider = ({
+  children,
+}: {
+  children: JSX.Element | JSX.Element[];
+}): ReactElement => {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {

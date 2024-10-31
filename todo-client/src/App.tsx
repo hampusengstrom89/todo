@@ -1,11 +1,15 @@
-import "./App.css";
+import './App.css';
+import TodoList from './components/TodoList';
+import * as sc from './styled';
 
 function App() {
   return (
     <>
-      <div>
+      <sc.Header>Filter & Sort</sc.Header>
+      <sc.Main>
         <h1>Todo</h1>
-      </div>
+        <TodoList />
+      </sc.Main>
     </>
   );
 }
