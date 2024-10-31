@@ -24,10 +24,10 @@ export const todos_get_todo = (
   res: Response,
   next: NextFunction
 ): void => {
-  const uuid: string = req.query.uuid as string;
+  const uuid: string = req.params.uuid as string;
 
   if (!uuid) {
-    res.send(400).json({ error: "missing uuid" });
+    res.status(400).json({ error: "missing uuid" });
     return;
   }
 
@@ -73,7 +73,7 @@ export const todos_update = (
   res: Response,
   next: NextFunction
 ): void => {
-  const uuid: string = req.query.uuid as string;
+  const uuid: string = req.params.uuid as string;
 
   const title: string = req.body.title as string;
   const description: string = req.body.description as string;
@@ -105,7 +105,7 @@ export const todos_delete = (
   res: Response,
   next: NextFunction
 ): void => {
-  const uuid: string = req.query.uuid as string;
+  const uuid: string = req.params.uuid as string;
 
   if (!uuid) {
     res.send(400).json({ error: "missing uuid" });
