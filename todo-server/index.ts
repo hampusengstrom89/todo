@@ -6,6 +6,19 @@ const port = process.env.PORT || 8000;
 
 app.use(express.json());
 
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
+  );
+
+  next();
+});
+
 app.get("/", todoController.todos_get);
 app.get("/todos", todoController.todos_get);
 app.get("/todos/:uuid", todoController.todos_get_todo);
