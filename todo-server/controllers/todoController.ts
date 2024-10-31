@@ -6,7 +6,11 @@ import { IFTodo } from "../interfaces/TodoInterface";
 const DEFAULT_OFFSET = 0;
 const DEFAULT_LIMIT = 10;
 
-export const todos_get = (req: Request, res: Response) => {
+export const todos_get = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
   const offset: number = parseInt(req.query.offset as string) || DEFAULT_OFFSET;
   const limit: number = parseInt(req.query.limit as string) || DEFAULT_LIMIT;
 
@@ -15,11 +19,16 @@ export const todos_get = (req: Request, res: Response) => {
   res.status(200).json({ payload: todos });
 };
 
-export const todos_get_todo = (req: Request, res: Response) => {
+export const todos_get_todo = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
   const uuid: string = req.query.uuid as string;
 
   if (!uuid) {
-    return res.send(400).json({ error: "missing uuid" });
+    res.send(400).json({ error: "missing uuid" });
+    return;
   }
 
   const todo: IFTodo | null = Todo.getTodo(uuid);
@@ -31,14 +40,19 @@ export const todos_get_todo = (req: Request, res: Response) => {
   }
 };
 
-export const todos_create = (req: Request, res: Response) => {
+export const todos_create = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const title: string = req.body.title as string;
   const description: string = req.body.description as string;
   const completed: boolean = req.body.completed === "true";
   const dueDate: number = parseInt(req.body.dueDate as string);
 
   if (!title || !description || !completed || !dueDate) {
-    return res.status(400).json({ error: "missing information" });
+    res.status(400).json({ error: "missing information" });
+    return;
   }
 
   const uuid = uuidv4();
@@ -54,7 +68,11 @@ export const todos_create = (req: Request, res: Response) => {
   res.status(200).json({ payload: todo });
 };
 
-export const todos_update = (req: Request, res: Response) => {
+export const todos_update = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const uuid: string = req.query.uuid as string;
 
   const title: string = req.body.title as string;
@@ -63,7 +81,8 @@ export const todos_update = (req: Request, res: Response) => {
   const dueDate: number = parseInt(req.body.dueDate as string);
 
   if (!uuid || !title || !description || !completed || !dueDate) {
-    return res.status(400).json({ error: "missing information" });
+    res.status(400).json({ error: "missing information" });
+    return;
   }
 
   const todo: IFTodo | null = Todo.updateTodo(uuid, {
@@ -81,11 +100,16 @@ export const todos_update = (req: Request, res: Response) => {
   }
 };
 
-export const todos_delete = (req: Request, res: Response) => {
+export const todos_delete = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const uuid: string = req.query.uuid as string;
 
   if (!uuid) {
-    return res.send(400).json({ error: "missing uuid" });
+    res.send(400).json({ error: "missing uuid" });
+    return;
   }
 
   const todo: IFTodo | null = Todo.removeTodo(uuid);
