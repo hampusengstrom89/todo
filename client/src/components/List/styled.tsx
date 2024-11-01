@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const TodoList = styled.ul`
+export const List = styled.ul`
   padding: 0;
   list-style: none;
   display: flex;
@@ -9,4 +9,8 @@ export const TodoList = styled.ul`
   margin: auto;
   gap: 16px;
   box-sizing: border-box;
+
+  li {
+    width: 100%;
+  }
 `;

@@ -25,11 +25,23 @@ export const Todo = styled.div`
     font-size: 18px;
   }
 
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
   time {
     font-size: 10px;
     position: absolute;
     left: 24px;
     bottom: 12px;
+  }
+`;
+
+export const EditableTodo = styled(Todo)`
+  input[type='text'] {
+    margin-bottom: 5px;
+    font-size: 18px;
   }
 `;
 
@@ -74,4 +86,12 @@ export const EditButton = styled(DefaultButton)`
   &:hover {
     opacity: 1;
   }
+`;
+
+export const SaveButton = styled(DefaultButton)`
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  background-color: rgba(0, 0, 0, 1);
+  border-radius: 7px;
 `;
