@@ -5,6 +5,8 @@ import { FaCheck } from 'react-icons/fa';
 import * as sc from './styled';
 import TextInput from '../../components/TextInput';
 import TextArea from '../../components/TextArea';
+import DateInput from '../../components/DateInput';
+import { getReadableDate } from '../../utils/helpers';
 
 const SaveButton = ({
   handleClick,
@@ -34,7 +36,7 @@ export const EditableTodo = ({
   };
 
   return (
-    <sc.EditableTodo>
+    <sc.EditableTodo $completed={todo.completed}>
       <TextInput
         onChange={handleChange('title')}
         value={newTodo.title}
@@ -44,6 +46,10 @@ export const EditableTodo = ({
         onChange={handleChange('description')}
         value={newTodo.description}
         placeHolder={'Enter a description'}
+      />
+      <DateInput
+        onChange={handleChange('description')}
+        value={getReadableDate(newTodo.dueDate)}
       />
       <SaveButton handleClick={handleDoneClick} />
     </sc.EditableTodo>
