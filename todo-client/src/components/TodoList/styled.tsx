@@ -7,4 +7,6 @@ export const TodoList = styled.ul`
   flex-direction: column;
   align-items: center;
   margin: auto;
+  gap: 16px;
+  box-sizing: border-box;
 `;

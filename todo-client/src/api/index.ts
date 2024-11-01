@@ -1,4 +1,4 @@
-import { IFTodo } from '../interfaces/TodoInterface';
+import * as IF from '../interfaces';
 
 const BASE_URL = 'http://localhost:8000';
 
@@ -11,7 +11,7 @@ export const getTodos = () =>
 export const getTodo = (uuid: string) =>
   fetch(`${BASE_URL}/todos/${uuid}`).then(toJSON).then(getPayload);
 
-export const editTodo = (todo: IFTodo) =>
+export const editTodo = (todo: IF.Todo) =>
   fetch(`${BASE_URL}/todo/${todo.uuid}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
