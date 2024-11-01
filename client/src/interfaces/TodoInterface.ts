@@ -1,4 +1,4 @@
-export interface IFTodo {
+export interface Todo {
   uuid: string;
   title: string;
   description: string;
