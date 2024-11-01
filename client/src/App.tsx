@@ -1,5 +1,5 @@
 import './App.css';
-import TodoList from './components/TodoList';
+import TodoListContainer from './features/TodoList';
 import * as sc from './styled';
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
       </sc.Header>
       <sc.Main>
         <h2>Add todo</h2>
-        <TodoList />
+        <TodoListContainer />
       </sc.Main>
     </>
   );
