@@ -12,8 +12,8 @@ export const getTodo = (uuid: string) =>
   fetch(`${BASE_URL}/todos/${uuid}`).then(toJSON).then(getPayload);
 
 export const editTodo = (todo: IF.Todo) =>
-  fetch(`${BASE_URL}/todo/${todo.uuid}`, {
-    method: 'POST',
+  fetch(`${BASE_URL}/todos/${todo.uuid}`, {
+    method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(todo),
   })
@@ -26,7 +26,7 @@ export const addTodo = (
   completed: boolean,
   dueDate: number,
 ) =>
-  fetch(`${BASE_URL}/todo`, {
+  fetch(`${BASE_URL}/todos`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ title, description, completed, dueDate }),
@@ -35,6 +35,6 @@ export const addTodo = (
     .then(getPayload);
 
 export const deleteTodo = (uuid: string) =>
-  fetch(`${BASE_URL}/todo/${uuid}`, { method: 'DELETE' })
+  fetch(`${BASE_URL}/todos/${uuid}`, { method: 'DELETE' })
     .then(toJSON)
     .then(getPayload);
