@@ -1,12 +1,10 @@
 import { ReactElement } from 'react';
 import * as IF from '../../interfaces';
 import { FiEdit } from 'react-icons/fi';
-import { FaRegCircle, FaRegCircleCheck } from 'react-icons/fa6';
+import { FaRegCircle, FaCircleCheck } from 'react-icons/fa6';
 
 import * as sc from './styled';
-
-const getReadableDate = (timestamp: number): string =>
-  new Date(timestamp).toISOString().slice(0, 10);
+import { getReadableDate } from '../../utils/helpers';
 
 const CheckButton = ({
   handleClick,
@@ -16,7 +14,7 @@ const CheckButton = ({
   checked: boolean;
 }): ReactElement => (
   <sc.CheckButton onClick={handleClick}>
-    {checked ? <FaRegCircleCheck /> : <FaRegCircle />}
+    {checked ? <FaCircleCheck /> : <FaRegCircle />}
   </sc.CheckButton>
 );
 
@@ -40,10 +38,10 @@ export const Todo = ({
   handleEditClick: IF.Button['onClick'];
 }): ReactElement => {
   return (
-    <sc.Todo>
+    <sc.Todo $completed={todo.completed}>
       <h2>{todo.title}</h2>
       <p>{todo.description}</p>
-      <CheckButton handleClick={handleCheckClick} checked={todo.isCompleted} />
+      <CheckButton handleClick={handleCheckClick} checked={todo.completed} />
       <EditButton handleClick={handleEditClick} />
       <time>{getReadableDate(todo.dueDate)}</time>
     </sc.Todo>

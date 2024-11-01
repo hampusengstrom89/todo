@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 import * as IF from '../../interfaces';
 
-export const Todo = styled.div`
+interface TodoProps {
+  $completed: boolean;
+}
+
+export const Todo = styled.div<TodoProps>`
   display: flex;
   flex-direction: column;
   position: relative;
-  padding: 12px 53px 12px 24px;
+  padding: 12px 41px 12px 24px;
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.8);
   color: #1a1a1a;
@@ -14,20 +18,23 @@ export const Todo = styled.div`
   border: 1px solid #884545;
   min-height: 125px;
   box-sizing: border-box;
-  cursor: pointer;
+  padding-bottom: 48px;
+  ${props => (props.$completed ? 'opacity: 0.5;' : '')}
+  transition: 0.1s opacity ease-in-out;
   &:hover {
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.9);
   }
 
   h2 {
-    margin: 0;
+    margin: 0 0 12px;
     padding: 0;
-    font-size: 18px;
+    font-size: 16px;
   }
 
   p {
     margin: 0;
     padding: 0;
+    font-size: 14px;
   }
 
   time {
@@ -39,9 +46,19 @@ export const Todo = styled.div`
 `;
 
 export const EditableTodo = styled(Todo)`
+  opacity: 1;
+  padding: 8px 41px 40px 16px;
   input[type='text'] {
     margin-bottom: 5px;
-    font-size: 18px;
+    font-size: 16px;
+  }
+  input[type='date'] {
+    position: absolute;
+    left: 16px;
+    bottom: 8px;
+  }
+  textArea {
+    font-size: 12px;
   }
 `;
 
@@ -50,8 +67,8 @@ const DefaultButton = styled.button<IF.Button>`
   background-color: unset;
   align-items: center;
   justify-content: center;
-  height: 48px;
-  width: 48px;
+  height: 36px;
+  width: 36px;
   padding: 0;
   border: none;
   outline: none;
@@ -72,14 +89,16 @@ export const CheckButton = styled(DefaultButton)`
   position: absolute;
   right: 5px;
   top: 5px;
+  svg {
+    fill: #ee9d87;
+  }
 `;
 
 export const EditButton = styled(DefaultButton)`
   position: absolute;
   right: 5px;
   bottom: 5px;
-  background-color: rgba(0, 0, 0, 0.1);
-  opacity: 0;
+  opacity: 0.2;
   transition: opacity 0.2s ease-in-out;
   border-radius: 7px;
 
@@ -92,6 +111,11 @@ export const SaveButton = styled(DefaultButton)`
   position: absolute;
   right: 5px;
   bottom: 5px;
-  background-color: rgba(0, 0, 0, 1);
   border-radius: 7px;
+  svg {
+    stroke: #1a1a1a;
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
 `;
