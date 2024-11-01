@@ -1,12 +1,13 @@
 import { readFileSync as load, writeFileSync as save } from "fs";
 
-import { IFTodo } from "../interfaces/TodoInterface";
+import * as IF from "../interfaces";
 import { byDueDate } from "../utils";
 
 const PATH = "./storage/todos.json";
 
-const loadTodos = (): IFTodo[] => JSON.parse(load(PATH, "utf8"));
-const storeTodos = (todos: IFTodo[]): void => save(PATH, JSON.stringify(todos));
+const loadTodos = (): IF.Todo[] => JSON.parse(load(PATH, "utf8"));
+const storeTodos = (todos: IF.Todo[]): void =>
+  save(PATH, JSON.stringify(todos, null, 4));
 
 /*
  *
@@ -18,7 +19,7 @@ const storeTodos = (todos: IFTodo[]): void => save(PATH, JSON.stringify(todos));
  *
  */
 
-export const createTodo = (todo: IFTodo): IFTodo => {
+export const createTodo = (todo: IF.Todo): IF.Todo => {
   const todos = loadTodos();
 
   todos.push(todo);
@@ -38,10 +39,10 @@ export const createTodo = (todo: IFTodo): IFTodo => {
  *
  */
 
-export const removeTodo = (uuid: IFTodo["uuid"]): IFTodo | null => {
+export const removeTodo = (uuid: IF.Todo["uuid"]): IF.Todo | null => {
   const todos = loadTodos();
 
-  const index = todos.findIndex((todo: IFTodo) => todo.uuid === uuid);
+  const index = todos.findIndex((todo: IF.Todo) => todo.uuid === uuid);
 
   if (index < 0) {
     return null;
@@ -65,7 +66,7 @@ export const removeTodo = (uuid: IFTodo["uuid"]): IFTodo | null => {
  *
  */
 
-export const getTodos = (offset: number, limit: number): IFTodo[] => {
+export const getTodos = (offset: number, limit: number): IF.Todo[] => {
   const todos = loadTodos();
   if (!todos || todos.length === 0) {
     return [];
@@ -82,10 +83,10 @@ export const getTodos = (offset: number, limit: number): IFTodo[] => {
  * @return The todo item with matching uuid, null if no match is found
  *
  */
-export const getTodo = (uuid: IFTodo["uuid"]): IFTodo | null => {
+export const getTodo = (uuid: IF.Todo["uuid"]): IF.Todo | null => {
   const todos = loadTodos();
 
-  const match = todos.find((todo: IFTodo) => todo.uuid === uuid);
+  const match = todos.find((todo: IF.Todo) => todo.uuid === uuid);
 
   if (!match) {
     return null;
@@ -105,11 +106,11 @@ export const getTodo = (uuid: IFTodo["uuid"]): IFTodo | null => {
  */
 
 export const updateTodo = (
-  uuid: IFTodo["uuid"],
-  todo: IFTodo
-): IFTodo | null => {
+  uuid: IF.Todo["uuid"],
+  todo: IF.Todo
+): IF.Todo | null => {
   const todos = loadTodos();
-  const index = todos.findIndex((todo: IFTodo) => todo.uuid === uuid);
+  const index = todos.findIndex((todo: IF.Todo) => todo.uuid === uuid);
   if (index < 0) {
     return null;
   }

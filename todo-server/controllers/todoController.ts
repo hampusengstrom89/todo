@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import * as Todo from "../models/todoModel";
 import { v4 as uuidv4 } from "uuid";
-import { IFTodo } from "../interfaces/TodoInterface";
+import * as IF from "../interfaces";
 
 const DEFAULT_OFFSET = 0;
 const DEFAULT_LIMIT = 10;
@@ -14,7 +14,7 @@ export const todos_get = (
   const offset: number = parseInt(req.query.offset as string) || DEFAULT_OFFSET;
   const limit: number = parseInt(req.query.limit as string) || DEFAULT_LIMIT;
 
-  const todos: IFTodo[] = Todo.getTodos(offset, limit);
+  const todos: IF.Todo[] = Todo.getTodos(offset, limit);
 
   res.status(200).json({ payload: todos });
 };
@@ -31,7 +31,7 @@ export const todos_get_todo = (
     return;
   }
 
-  const todo: IFTodo | null = Todo.getTodo(uuid);
+  const todo: IF.Todo | null = Todo.getTodo(uuid);
 
   if (todo === null) {
     res.status(404).json({ error: "todo item not found" });
@@ -57,7 +57,7 @@ export const todos_create = (
 
   const uuid = uuidv4();
 
-  const todo: IFTodo | null = Todo.createTodo({
+  const todo: IF.Todo | null = Todo.createTodo({
     uuid,
     title,
     description,
@@ -84,7 +84,7 @@ export const todos_update = (
     return;
   }
 
-  const todo: IFTodo | null = Todo.updateTodo(uuid, {
+  const todo: IF.Todo | null = Todo.updateTodo(uuid, {
     uuid,
     title,
     description,
@@ -111,7 +111,7 @@ export const todos_delete = (
     return;
   }
 
-  const todo: IFTodo | null = Todo.removeTodo(uuid);
+  const todo: IF.Todo | null = Todo.removeTodo(uuid);
 
   if (todo === null) {
     res.status(404).json({ error: "todo item not found" });
