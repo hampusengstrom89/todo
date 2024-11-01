@@ -16,7 +16,7 @@ const SaveButton = ({
   </sc.SaveButton>
 );
 
-export const EditTodo = ({
+export const EditableTodo = ({
   todo,
   handleEditDoneClick,
 }: {

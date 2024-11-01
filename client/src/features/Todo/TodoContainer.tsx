@@ -1,5 +1,5 @@
 import { Todo } from './Todo';
-import { EditTodo } from './EditTodo';
+import { EditableTodo } from './EditableTodo';
 import * as IF from '../../interfaces';
 import { ReactElement, useState } from 'react';
 import { useTodos } from '../../utils/providers/TodoContext';
@@ -26,7 +26,7 @@ export const TodoContainer = (todo: IF.Todo): ReactElement => {
   };
 
   return isEdit ? (
-    <EditTodo todo={todo} handleEditDoneClick={handleEditDoneClick} />
+    <EditableTodo todo={todo} handleEditDoneClick={handleEditDoneClick} />
   ) : (
     <Todo
       todo={todo}
