@@ -12,12 +12,16 @@ export const TextInput = (props: IF.TextInput) => {
   const handleBlur = () => props.onChange(value);
 
   return (
-    <sc.TextInput
-      type="text"
-      onBlur={handleBlur}
-      onChange={handleChange}
-      placeholder={props.placeHolder}
-      value={value}
-    />
+    <>
+      <sc.Label htmlFor={props.label}>{props.label}</sc.Label>
+      <sc.TextInput
+        name={props.label}
+        type="text"
+        onBlur={handleBlur}
+        onChange={handleChange}
+        placeholder={props.placeHolder}
+        value={value}
+      />
+    </>
   );
 };
