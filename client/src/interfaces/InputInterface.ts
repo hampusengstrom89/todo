@@ -21,3 +21,11 @@ export interface DateInput {
   disabled?: boolean;
   placeHolder?: string;
 }
+
+export interface Checkbox {
+  onChange: (value: boolean) => void;
+  checked?: boolean;
+  name?: string;
+  disabled?: boolean;
+  placeHolder?: string;
+}

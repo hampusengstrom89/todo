@@ -1,5 +1,6 @@
 import './App.css';
 import AddableTodo from './features/AddableTodo';
+import Filter from './features/Filter';
 import TodoList from './features/TodoList';
 import * as sc from './styled';
 
@@ -8,7 +9,7 @@ function App() {
     <>
       <sc.Header>
         <h1>Todo</h1>
-        <h2>Filter & Sort</h2>
+        <Filter />
       </sc.Header>
       <sc.Main>
         <AddableTodo />

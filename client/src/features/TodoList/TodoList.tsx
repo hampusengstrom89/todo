@@ -5,11 +5,11 @@ import * as IF from '../../interfaces';
 import { useTodos } from '../../utils/providers/TodoContext';
 
 export const TodoList = (): ReactElement => {
-  const { todos }: { todos: IF.Todo[] } = useTodos();
+  const { filteredTodos }: { filteredTodos: IF.Todo[] } = useTodos();
 
   return (
     <List
-      items={todos}
+      items={filteredTodos}
       renderItem={todo => (
         <li key={todo.uuid}>
           <Todo {...todo} />
