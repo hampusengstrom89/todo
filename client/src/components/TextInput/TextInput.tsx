@@ -7,17 +7,20 @@ export const TextInput = (props: IF.TextInput) => {
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     setValue(event.currentTarget.value);
+    if (!props.handleChangeOnBlur) {
+      props.onChange(event.currentTarget.value);
+    }
   };
 
   const handleBlur = () => props.onChange(value);
 
   return (
     <>
-      <sc.Label htmlFor={props.label}>{props.label}</sc.Label>
+      {props.label && <sc.Label htmlFor={props.label}>{props.label}</sc.Label>}
       <sc.TextInput
         name={props.label}
         type="text"
-        onBlur={handleBlur}
+        onBlur={props.handleChangeOnBlur ? handleBlur : () => {}}
         onChange={handleChange}
         placeholder={props.placeHolder}
         value={value}

@@ -5,6 +5,7 @@ export interface TextInput {
   disabled?: boolean;
   placeHolder?: string;
   label?: string;
+  handleChangeOnBlur?: boolean | undefined;
 }
 
 export interface TextArea {

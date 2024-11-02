@@ -71,6 +71,7 @@ export const EditableTodo = ({
         onChange={handleChange('title')}
         value={newTodo.title}
         placeHolder={'Enter a title'}
+        handleChangeOnBlur={true}
       />
       <TextArea
         onChange={handleChange('description')}

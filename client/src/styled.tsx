@@ -22,6 +22,7 @@ export const Main = styled.main`
   box-sizing: border-box;
   margin-bottom: 40px;
   align-items: center;
+  width: 350px;
 
   h1 {
     text-align: center;
