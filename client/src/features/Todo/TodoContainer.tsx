@@ -5,7 +5,13 @@ import { ReactElement, useState } from 'react';
 import { useTodos } from '../../utils/providers/TodoContext';
 
 export const TodoContainer = (todo: IF.Todo): ReactElement => {
-  const { editTodo }: { editTodo: (editedTodo: IF.Todo) => void } = useTodos();
+  const {
+    editTodo,
+    deleteTodo,
+  }: {
+    editTodo: (editedTodo: IF.Todo) => void;
+    deleteTodo: (uuid: IF.Todo['uuid']) => void;
+  } = useTodos();
   const [isEdit, setIsEdit] = useState(false);
 
   const handleCheckClick = () => {
@@ -18,6 +24,11 @@ export const TodoContainer = (todo: IF.Todo): ReactElement => {
     setIsEdit(true);
   };
 
+  const handleDeleteClick = () => {
+    console.log('Click delete!');
+    deleteTodo(todo.uuid);
+  };
+
   const handleEditDoneClick = (editedTodo: IF.Todo) => {
     console.log('Click edit done!');
 
@@ -26,7 +37,11 @@ export const TodoContainer = (todo: IF.Todo): ReactElement => {
   };
 
   return isEdit ? (
-    <EditableTodo todo={todo} handleEditDoneClick={handleEditDoneClick} />
+    <EditableTodo
+      todo={todo}
+      handleEditDoneClick={handleEditDoneClick}
+      handleDeleteClick={handleDeleteClick}
+    />
   ) : (
     <Todo
       todo={todo}

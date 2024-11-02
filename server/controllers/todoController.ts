@@ -74,12 +74,11 @@ export const todos_update = (
   next: NextFunction
 ): void => {
   const uuid: string = req.params.uuid as string;
-  const title: string = req.body.title as string;
-  const description: string = req.body.description as string;
-  const completed: boolean = req.body.completed as boolean;
+  const title: string = (req.body.title as string) || "";
+  const description: string = (req.body.description as string) || "";
+  const completed: boolean = (req.body.completed as boolean) || false;
   const dueDate: number = req.body.dueDate as number;
-
-  if (!uuid || !title || !description || !completed || !dueDate) {
+  if (!uuid || !dueDate) {
     res.status(400).json({ error: "missing information" });
     return;
   }
