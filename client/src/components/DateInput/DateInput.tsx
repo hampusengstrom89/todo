@@ -6,7 +6,6 @@ export const DateInput = (props: IF.DateInput) => {
   const [value, setValue] = useState<string>(props.value || '');
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    debugger;
     setValue(event.currentTarget.value);
   };
 

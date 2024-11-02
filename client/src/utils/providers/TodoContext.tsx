@@ -11,14 +11,26 @@ import { ErrorMessage } from '../../components/ErrorMessage';
 
 interface TodoContextValue {
   todos: IF.Todo[];
-  addTodo: (todo: IF.Todo) => void;
+  isFetching: boolean;
+  addTodo: (
+    title: IF.Todo['title'],
+    description: IF.Todo['description'],
+    completed: IF.Todo['completed'],
+    dueDate: IF.Todo['dueDate'],
+  ) => void;
   deleteTodo: (uuid: IF.Todo['uuid']) => void;
   editTodo: (editedTodo: IF.Todo) => void;
 }
 
 const todoInitial: TodoContextValue = {
   todos: [],
-  addTodo: (todo: IF.Todo) => {},
+  isFetching: true,
+  addTodo: (
+    title: IF.Todo['title'],
+    description: IF.Todo['description'],
+    completed: IF.Todo['completed'],
+    dueDate: IF.Todo['dueDate'],
+  ) => {},
   deleteTodo: (uuid: IF.Todo['uuid']) => {},
   editTodo: (editedTodo: IF.Todo) => {},
 };
@@ -31,14 +43,19 @@ const TodoProvider = ({
   children: JSX.Element | JSX.Element[];
 }): ReactElement => {
   const [todos, setTodos] = useState<IF.Todo[]>([]);
+  const [isFetching, setIsFetching] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     api
       .getTodos()
-      .then(todos => setTodos(todos))
+      .then(todos => {
+        setIsFetching(false);
+        setTodos(todos);
+      })
       .catch(error => {
-        setError('Something went wrong while loading todos');
+        setIsFetching(false);
+        setError(`Something went wrong while loading todos: ${error.message}`);
         setTimeout(() => setError(null), 2000);
       });
   }, []);
@@ -58,12 +75,13 @@ const TodoProvider = ({
         });
       })
       .catch(error => {
-        setError('Something went wrong when creating todo');
+        setError(`Something went wrong when creating todo: ${error.message}`);
         setTimeout(() => setError(null), 2000);
       });
   };
 
   const deleteTodo = (uuid: IF.Todo['uuid']) => {
+    console.log('deleteTodo', uuid);
     api
       .deleteTodo(uuid)
       .then(() => {
@@ -73,12 +91,13 @@ const TodoProvider = ({
         });
       })
       .catch(error => {
-        setError('Something went wrong when deleting todo');
+        setError(`Something went wrong when deleting todo: ${error.message}`);
         setTimeout(() => setError(null), 2000);
       });
   };
 
   const editTodo = (editedTodo: IF.Todo) => {
+    console.log('editTodo', editedTodo);
     api
       .editTodo(editedTodo)
       .then(() => {
@@ -94,13 +113,14 @@ const TodoProvider = ({
         });
       })
       .catch(error => {
-        setError('Something went wrong when editing todo');
+        setError(`Something went wrong when editing todo: ${error.message}`);
         setTimeout(() => setError(null), 2000);
       });
   };
 
   const value: TodoContextValue = {
     todos,
+    isFetching,
     addTodo,
     deleteTodo,
     editTodo,

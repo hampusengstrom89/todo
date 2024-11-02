@@ -43,8 +43,7 @@ export const AddableTodoContainer = () => {
     dueDate: IF.Todo['dueDate'],
   ) => {
     console.log('Click edit done!');
-
-    addTodo(title, description, completed, dueDate);
+    addTodo(title, description, completed, new Date(dueDate).getTime());
     setIsCreating(false);
   };
 
@@ -53,11 +52,16 @@ export const AddableTodoContainer = () => {
     setIsCreating(true);
   };
 
+  const handleDeleteClick = () => {
+    console.log('Click delete!');
+    setIsCreating(false);
+  };
+
   return isCreating ? (
     <EditableTodo
       {...todoTemplate}
       onComplete={handleComplete}
-      handleDeleteClick={() => {}}
+      handleDeleteClick={handleDeleteClick}
     />
   ) : (
     <CreateTodoButton handleClick={handleCreateClick} />

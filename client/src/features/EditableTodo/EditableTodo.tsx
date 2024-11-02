@@ -78,7 +78,7 @@ export const EditableTodo = ({
         placeHolder={'Enter a description'}
       />
       <DateInput
-        onChange={handleChange('description')}
+        onChange={handleChange('dueDate')}
         value={getReadableDate(newTodo.dueDate)}
       />
       <DeleteButton handleClick={handleDeleteClick} />
