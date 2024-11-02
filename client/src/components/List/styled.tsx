@@ -9,6 +9,7 @@ export const List = styled.ul`
   margin: 16px auto;
   gap: 16px;
   box-sizing: border-box;
+  width: 350px;
 
   li {
     width: 100%;
