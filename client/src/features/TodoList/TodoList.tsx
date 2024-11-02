@@ -6,5 +6,15 @@ import { useTodos } from '../../utils/providers/TodoContext';
 
 export const TodoList = (): ReactElement => {
   const { todos }: { todos: IF.Todo[] } = useTodos();
-  return <List items={todos} renderItem={Todo} />;
+
+  return (
+    <List
+      items={todos}
+      renderItem={todo => (
+        <li key={todo.uuid}>
+          <Todo {...todo} />
+        </li>
+      )}
+    />
+  );
 };
