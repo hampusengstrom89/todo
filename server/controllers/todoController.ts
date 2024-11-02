@@ -11,10 +11,7 @@ export const todos_get = (
   res: Response,
   next: NextFunction
 ): void => {
-  const offset: number = parseInt(req.query.offset as string) || DEFAULT_OFFSET;
-  const limit: number = parseInt(req.query.limit as string) || DEFAULT_LIMIT;
-
-  const todos: IF.Todo[] = Todo.getTodos(offset, limit);
+  const todos: IF.Todo[] = Todo.getTodos();
 
   res.status(200).json({ payload: todos });
 };
@@ -47,10 +44,10 @@ export const todos_create = (
 ): void => {
   const title: string = req.body.title as string;
   const description: string = req.body.description as string;
-  const completed: boolean = req.body.completed === "true";
+  const completed: boolean = req.body.completed === "true" || false;
   const dueDate: number = parseInt(req.body.dueDate as string);
 
-  if (!title || !description || !completed || !dueDate) {
+  if (!title || !dueDate) {
     res.status(400).json({ error: "missing information" });
     return;
   }
@@ -78,7 +75,8 @@ export const todos_update = (
   const description: string = (req.body.description as string) || "";
   const completed: boolean = (req.body.completed as boolean) || false;
   const dueDate: number = req.body.dueDate as number;
-  if (!uuid || !dueDate) {
+
+  if (!uuid || !title || !dueDate) {
     res.status(400).json({ error: "missing information" });
     return;
   }

@@ -66,13 +66,12 @@ export const removeTodo = (uuid: IF.Todo["uuid"]): IF.Todo | null => {
  *
  */
 
-export const getTodos = (offset: number, limit: number): IF.Todo[] => {
+export const getTodos = (): IF.Todo[] => {
   const todos = loadTodos();
   if (!todos || todos.length === 0) {
     return [];
   }
-  const subTodos = todos.slice(offset, offset + limit);
-  return subTodos;
+  return todos;
 };
 
 /*
