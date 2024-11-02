@@ -5,6 +5,7 @@ import * as IF from '../../interfaces';
 import DateInput from '../../components/DateInput';
 
 import * as sc from './styled';
+import TextInput from '../../components/TextInput';
 
 interface FilterInterface {
   [key: string]: any;
@@ -23,6 +24,11 @@ const filterFunctions: FilterFunctionsInterface = {
 
   completed: (filterValue: boolean, todo: IF.Todo) =>
     filterValue !== null ? todo.completed === filterValue : true,
+
+  search: (filterValue: string, todo: IF.Todo) =>
+    filterValue !== null
+      ? todo.title.toLowerCase().startsWith(filterValue.toLowerCase())
+      : true,
 };
 
 export const Filter = () => {
@@ -60,6 +66,13 @@ export const Filter = () => {
 
   return (
     <sc.FilterContainer>
+      <sc.Sort>
+        <TextInput
+          onChange={handleChange('search')}
+          value={''}
+          placeHolder="Search for todos"
+        />
+      </sc.Sort>
       <sc.Filter>
         <Checkbox
           label="Completed"
