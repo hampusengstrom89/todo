@@ -7,6 +7,7 @@ import {
 } from 'react';
 import * as api from '../../api';
 import * as IF from '../../interfaces';
+import { ErrorMessage } from '../../components/ErrorMessage';
 
 interface TodoContextValue {
   todos: IF.Todo[];
@@ -30,9 +31,16 @@ const TodoProvider = ({
   children: JSX.Element | JSX.Element[];
 }): ReactElement => {
   const [todos, setTodos] = useState<IF.Todo[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    api.getTodos().then(todos => setTodos(todos));
+    api
+      .getTodos()
+      .then(todos => setTodos(todos))
+      .catch(error => {
+        setError('Något gick tokigt');
+        setTimeout(() => setError(null), 2000);
+      });
   }, []);
 
   const addTodo = (todo: IF.Todo) => {
@@ -48,7 +56,10 @@ const TodoProvider = ({
           return [...prevTodos.slice(0, index), ...prevTodos.slice(index + 1)];
         });
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        setError('Något gick tokigt');
+        setTimeout(() => setError(null), 2000);
+      });
   };
 
   const editTodo = (editedTodo: IF.Todo) => {
@@ -66,7 +77,10 @@ const TodoProvider = ({
           ];
         });
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        setError('Något gick tokigt');
+        setTimeout(() => setError(null), 2000);
+      });
   };
 
   const value: TodoContextValue = {
@@ -76,7 +90,14 @@ const TodoProvider = ({
     editTodo,
   };
 
-  return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
+  return (
+    <TodoContext.Provider value={value}>
+      <>
+        {error && <ErrorMessage>{error}</ErrorMessage>}
+        {children}
+      </>
+    </TodoContext.Provider>
+  );
 };
 
 export default TodoProvider;
