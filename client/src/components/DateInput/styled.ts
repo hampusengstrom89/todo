@@ -7,3 +7,10 @@ export const DateInput = styled.input`
   color: #1a1a1a;
   border-radius: 4px;
 `;
+
+export const Label = styled.label`
+  display: flex;
+  justify-content: flex-start;
+  gap: 16px;
+  align-items: center;
+`;
