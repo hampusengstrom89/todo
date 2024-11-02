@@ -38,7 +38,7 @@ const TodoProvider = ({
       .getTodos()
       .then(todos => setTodos(todos))
       .catch(error => {
-        setError('Något gick tokigt');
+        setError('Something went wrong while loading todos');
         setTimeout(() => setError(null), 2000);
       });
   }, []);
@@ -57,7 +57,7 @@ const TodoProvider = ({
         });
       })
       .catch(error => {
-        setError('Något gick tokigt');
+        setError('Something went wrong when deleting todo');
         setTimeout(() => setError(null), 2000);
       });
   };
@@ -78,7 +78,7 @@ const TodoProvider = ({
         });
       })
       .catch(error => {
-        setError('Något gick tokigt');
+        setError('Something went wrong when editing todo');
         setTimeout(() => setError(null), 2000);
       });
   };
