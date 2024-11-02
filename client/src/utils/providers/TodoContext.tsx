@@ -12,7 +12,7 @@ import { ErrorMessage } from '../../components/ErrorMessage';
 interface TodoContextValue {
   todos: IF.Todo[];
   filteredTodos: IF.Todo[];
-  filterTodos: (newFilteredTodos: IF.Todo[]) => void;
+  setFilteredTodos: (newFilteredTodos: IF.Todo[]) => void;
   isFetching: boolean;
   addTodo: (
     title: IF.Todo['title'],
@@ -28,7 +28,7 @@ const todoInitial: TodoContextValue = {
   todos: [],
   filteredTodos: [],
   isFetching: true,
-  filterTodos: (newFilteredTodos: IF.Todo[]) => {},
+  setFilteredTodos: (newFilteredTodos: IF.Todo[]) => {},
   addTodo: (
     title: IF.Todo['title'],
     description: IF.Todo['description'],
@@ -51,9 +51,9 @@ const TodoProvider = ({
   const [isFetching, setIsFetching] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const filterTodos = (newFilteredTodos: IF.Todo[]) => {
-    setFilteredTodos(newFilteredTodos);
-  };
+  // const setFilteredTodos = (newFilteredTodos: IF.Todo[]) => {
+  //   setFilteredTodos(newFilteredTodos);
+  // };
 
   useEffect(() => {
     api
@@ -130,7 +130,7 @@ const TodoProvider = ({
 
   const value: TodoContextValue = {
     todos,
-    filterTodos,
+    setFilteredTodos,
     filteredTodos,
     isFetching,
     addTodo,
