@@ -9,11 +9,12 @@ export const ErrorMessage = styled.div`
   max-width: 400px;
   width: fit-content;
   text-align: center;
-  position: absolute;
+  position: fixed;
   top: 12px;
   left: 50%;
   transform: translateX(-50%);
   color: white;
+  z-index: 1;
 
   h2 {
     margin: 0 0 8px 0;

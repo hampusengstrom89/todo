@@ -61,7 +61,7 @@ export const EditableTodo = ({
     onComplete(title, description, completed, dueDate);
   };
 
-  const handleChange = (attr: string) => (value: string) => {
+  const handleChange = (attr: string) => (value: string | number) => {
     setNewTodo(newTodo => ({ ...newTodo, [attr]: value }));
   };
 

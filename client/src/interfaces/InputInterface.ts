@@ -4,6 +4,7 @@ export interface TextInput {
   name?: string;
   disabled?: boolean;
   placeHolder?: string;
+  label?: string;
 }
 
 export interface TextArea {
@@ -12,12 +13,23 @@ export interface TextArea {
   name?: string;
   disabled?: boolean;
   placeHolder?: string;
+  label?: string;
 }
 
 export interface DateInput {
-  onChange: (value: string) => void;
+  onChange: (value: number) => void;
   value?: string;
   name?: string;
   disabled?: boolean;
   placeHolder?: string;
+  label?: string;
+}
+
+export interface Checkbox {
+  onChange: (value: boolean) => void;
+  checked?: boolean;
+  name?: string;
+  disabled?: boolean;
+  placeHolder?: string;
+  label?: string;
 }

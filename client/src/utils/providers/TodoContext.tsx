@@ -11,6 +11,8 @@ import { ErrorMessage } from '../../components/ErrorMessage';
 
 interface TodoContextValue {
   todos: IF.Todo[];
+  filteredTodos: IF.Todo[];
+  setFilteredTodos: (newFilteredTodos: IF.Todo[]) => void;
   isFetching: boolean;
   addTodo: (
     title: IF.Todo['title'],
@@ -24,7 +26,9 @@ interface TodoContextValue {
 
 const todoInitial: TodoContextValue = {
   todos: [],
+  filteredTodos: [],
   isFetching: true,
+  setFilteredTodos: (newFilteredTodos: IF.Todo[]) => {},
   addTodo: (
     title: IF.Todo['title'],
     description: IF.Todo['description'],
@@ -43,8 +47,13 @@ const TodoProvider = ({
   children: JSX.Element | JSX.Element[];
 }): ReactElement => {
   const [todos, setTodos] = useState<IF.Todo[]>([]);
+  const [filteredTodos, setFilteredTodos] = useState<IF.Todo[]>([]);
   const [isFetching, setIsFetching] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  // const setFilteredTodos = (newFilteredTodos: IF.Todo[]) => {
+  //   setFilteredTodos(newFilteredTodos);
+  // };
 
   useEffect(() => {
     api
@@ -52,6 +61,7 @@ const TodoProvider = ({
       .then(todos => {
         setIsFetching(false);
         setTodos(todos);
+        setFilteredTodos(todos);
       })
       .catch(error => {
         setIsFetching(false);
@@ -120,6 +130,8 @@ const TodoProvider = ({
 
   const value: TodoContextValue = {
     todos,
+    setFilteredTodos,
+    filteredTodos,
     isFetching,
     addTodo,
     deleteTodo,

@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
-export const TextInput = styled.input`
+export const Checkbox = styled.input`
   padding: 4px 8px;
   background-color: white;
   border: 1px solid gray;
   color: #1a1a1a;
   border-radius: 4px;
+  width: 16px;
+  height: 16px;
 `;
 
 export const Label = styled.label`
