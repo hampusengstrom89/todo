@@ -7,11 +7,15 @@ export const Checkbox = (props: IF.Checkbox) => {
   };
 
   return (
-    <sc.Checkbox
-      type="checkbox"
-      onChange={handleChange}
-      placeholder={props.placeHolder}
-      checked={props.checked}
-    />
+    <>
+      <sc.Label htmlFor={props.label}>{props.label}</sc.Label>
+      <sc.Checkbox
+        name={props.label}
+        type="checkbox"
+        onChange={handleChange}
+        placeholder={props.placeHolder}
+        checked={props.checked}
+      />
+    </>
   );
 };
