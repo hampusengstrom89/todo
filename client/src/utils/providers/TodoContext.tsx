@@ -43,8 +43,24 @@ const TodoProvider = ({
       });
   }, []);
 
-  const addTodo = (todo: IF.Todo) => {
-    console.log('addTodo', todo);
+  const addTodo = (
+    title: IF.Todo['title'],
+    description: IF.Todo['description'],
+    completed: IF.Todo['completed'],
+    dueDate: IF.Todo['dueDate'],
+  ) => {
+    console.log('addTodo', title, description, completed, dueDate);
+    api
+      .addTodo(title, description, completed, dueDate)
+      .then(newTodo => {
+        setTodos(prevTodos => {
+          return [newTodo, ...prevTodos];
+        });
+      })
+      .catch(error => {
+        setError('Something went wrong when creating todo');
+        setTimeout(() => setError(null), 2000);
+      });
   };
 
   const deleteTodo = (uuid: IF.Todo['uuid']) => {

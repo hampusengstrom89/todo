@@ -21,10 +21,10 @@ export const editTodo = (todo: IF.Todo) =>
     .then(getPayload);
 
 export const addTodo = (
-  title: string,
-  description: string,
-  completed: boolean,
-  dueDate: number,
+  title: IF.Todo['title'],
+  description: IF.Todo['description'],
+  completed: IF.Todo['completed'],
+  dueDate: IF.Todo['dueDate'],
 ) =>
   fetch(`${BASE_URL}/todos`, {
     method: 'POST',
