@@ -18,13 +18,19 @@ export const editTodo = (todo: IF.Todo) =>
     body: JSON.stringify(todo),
   })
     .then(toJSON)
+    .then(result => {
+      if (result.error) {
+        throw new Error(result.error);
+      }
+      return result;
+    })
     .then(getPayload);
 
 export const addTodo = (
-  title: string,
-  description: string,
-  completed: boolean,
-  dueDate: number,
+  title: IF.Todo['title'],
+  description: IF.Todo['description'],
+  completed: IF.Todo['completed'],
+  dueDate: IF.Todo['dueDate'],
 ) =>
   fetch(`${BASE_URL}/todos`, {
     method: 'POST',
@@ -32,9 +38,21 @@ export const addTodo = (
     body: JSON.stringify({ title, description, completed, dueDate }),
   })
     .then(toJSON)
+    .then(result => {
+      if (result.error) {
+        throw new Error(result.error);
+      }
+      return result;
+    })
     .then(getPayload);
 
 export const deleteTodo = (uuid: string) =>
   fetch(`${BASE_URL}/todos/${uuid}`, { method: 'DELETE' })
     .then(toJSON)
+    .then(result => {
+      if (result.error) {
+        throw new Error(result.error);
+      }
+      return result;
+    })
     .then(getPayload);

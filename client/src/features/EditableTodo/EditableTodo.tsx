@@ -30,18 +30,35 @@ const DeleteButton = ({
 );
 
 export const EditableTodo = ({
-  todo,
-  handleEditDoneClick,
+  title,
+  description,
+  completed,
+  dueDate,
+  onComplete,
   handleDeleteClick,
 }: {
-  todo: IF.Todo;
-  handleEditDoneClick: (editedTodo: IF.Todo) => void;
+  title: IF.Todo['title'];
+  description: IF.Todo['description'];
+  completed: IF.Todo['completed'];
+  dueDate: IF.Todo['dueDate'];
+  onComplete: (
+    title: IF.Todo['title'],
+    description: IF.Todo['description'],
+    completed: IF.Todo['completed'],
+    dueDate: IF.Todo['dueDate'],
+  ) => void;
   handleDeleteClick: () => void;
 }): ReactElement => {
-  const [newTodo, setNewTodo] = useState({ ...todo });
+  const [newTodo, setNewTodo] = useState({
+    title,
+    description,
+    completed,
+    dueDate,
+  });
 
   const handleDoneClick = () => {
-    handleEditDoneClick(newTodo);
+    const { title, description, completed, dueDate } = newTodo;
+    onComplete(title, description, completed, dueDate);
   };
 
   const handleChange = (attr: string) => (value: string) => {
@@ -49,7 +66,7 @@ export const EditableTodo = ({
   };
 
   return (
-    <sc.EditableTodo $completed={todo.completed}>
+    <sc.EditableTodo $completed={completed}>
       <TextInput
         onChange={handleChange('title')}
         value={newTodo.title}
@@ -61,7 +78,7 @@ export const EditableTodo = ({
         placeHolder={'Enter a description'}
       />
       <DateInput
-        onChange={handleChange('description')}
+        onChange={handleChange('dueDate')}
         value={getReadableDate(newTodo.dueDate)}
       />
       <DeleteButton handleClick={handleDeleteClick} />
