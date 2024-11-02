@@ -107,6 +107,19 @@ export const EditButton = styled(DefaultButton)`
   }
 `;
 
+export const DeleteButton = styled(DefaultButton)`
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  opacity: 0.2;
+  transition: opacity 0.2s ease-in-out;
+  border-radius: 7px;
+
+  &:hover {
+    opacity: 1;
+  }
+`;
+
 export const SaveButton = styled(DefaultButton)`
   position: absolute;
   right: 5px;

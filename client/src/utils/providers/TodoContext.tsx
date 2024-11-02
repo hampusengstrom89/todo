@@ -21,6 +21,7 @@ const todoInitial: TodoContextValue = {
   deleteTodo: (uuid: IF.Todo['uuid']) => {},
   editTodo: (editedTodo: IF.Todo) => {},
 };
+
 const TodoContext = createContext<TodoContextValue>(todoInitial);
 
 const TodoProvider = ({
@@ -39,23 +40,31 @@ const TodoProvider = ({
   };
 
   const deleteTodo = (uuid: IF.Todo['uuid']) => {
-    console.log('deleteTodo', uuid);
+    api
+      .deleteTodo(uuid)
+      .then(() => {
+        setTodos(prevTodos => {
+          const index = prevTodos.findIndex(todo => todo.uuid === uuid);
+          return [...prevTodos.slice(0, index), ...prevTodos.slice(index + 1)];
+        });
+      })
+      .catch(error => console.log(error));
   };
 
   const editTodo = (editedTodo: IF.Todo) => {
-    setTodos(prevTodos => {
-      const index = prevTodos.findIndex(todo => todo.uuid === editedTodo.uuid);
-      return [
-        ...prevTodos.slice(0, index),
-        editedTodo,
-        ...prevTodos.slice(index + 1),
-      ];
-    });
-
     api
       .editTodo(editedTodo)
-      .then(response => {
-        console.log(response);
+      .then(() => {
+        setTodos(prevTodos => {
+          const index = prevTodos.findIndex(
+            todo => todo.uuid === editedTodo.uuid,
+          );
+          return [
+            ...prevTodos.slice(0, index),
+            editedTodo,
+            ...prevTodos.slice(index + 1),
+          ];
+        });
       })
       .catch(error => console.log(error));
   };
