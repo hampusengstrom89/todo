@@ -7,6 +7,7 @@ export const DateInput = styled.input`
   color: #1a1a1a;
   border-radius: 4px;
   box-sizing: border-box;
+  font-size: 16px;
 `;
 
 export const Label = styled.label`
@@ -14,4 +15,5 @@ export const Label = styled.label`
   justify-content: flex-start;
   gap: 16px;
   align-items: center;
+  font-size: 16px;
 `;
