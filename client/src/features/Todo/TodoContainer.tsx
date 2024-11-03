@@ -14,20 +14,12 @@ export const TodoContainer = (todo: IF.Todo): ReactElement => {
   } = useTodos();
   const [isEdit, setIsEdit] = useState<Boolean>(false);
 
-  const handleCheckClick = () => {
-    console.log('Click check!');
+  const handleCheckClick = () =>
     editTodo({ ...todo, completed: !todo.completed });
-  };
 
-  const handleEditClick = () => {
-    console.log('Click edit!');
-    setIsEdit(true);
-  };
+  const handleEditClick = () => setIsEdit(true);
 
-  const handleDeleteClick = () => {
-    console.log('Click delete!');
-    deleteTodo(todo.uuid);
-  };
+  const handleDeleteClick = () => deleteTodo(todo.uuid);
 
   const handleComplete = (
     title: IF.Todo['title'],
@@ -35,8 +27,6 @@ export const TodoContainer = (todo: IF.Todo): ReactElement => {
     completed: IF.Todo['completed'],
     dueDate: IF.Todo['dueDate'],
   ) => {
-    console.log('Click edit done!');
-
     editTodo({ ...todo, title, description, completed, dueDate });
     setIsEdit(false);
   };

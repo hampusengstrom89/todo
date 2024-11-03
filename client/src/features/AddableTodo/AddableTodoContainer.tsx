@@ -42,20 +42,12 @@ export const AddableTodoContainer = () => {
     completed: IF.Todo['completed'],
     dueDate: IF.Todo['dueDate'],
   ) => {
-    console.log('Click edit done!');
     addTodo(title, description, completed, new Date(dueDate).getTime());
     setIsCreating(false);
   };
 
-  const handleCreateClick = () => {
-    console.log('Click create!');
-    setIsCreating(true);
-  };
-
-  const handleDeleteClick = () => {
-    console.log('Click delete!');
-    setIsCreating(false);
-  };
+  const handleCreateClick = () => setIsCreating(true);
+  const handleDeleteClick = () => setIsCreating(false);
 
   return isCreating ? (
     <EditableTodo

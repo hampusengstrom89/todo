@@ -76,7 +76,6 @@ const TodoProvider = ({
     completed: IF.Todo['completed'],
     dueDate: IF.Todo['dueDate'],
   ) => {
-    console.log('addTodo', title, description, completed, dueDate);
     api
       .addTodo(title, description, completed, dueDate)
       .then(newTodo => {
@@ -91,7 +90,6 @@ const TodoProvider = ({
   };
 
   const deleteTodo = (uuid: IF.Todo['uuid']) => {
-    console.log('deleteTodo', uuid);
     api
       .deleteTodo(uuid)
       .then(() => {
@@ -107,7 +105,6 @@ const TodoProvider = ({
   };
 
   const editTodo = (editedTodo: IF.Todo) => {
-    console.log('editTodo', editedTodo);
     api
       .editTodo(editedTodo)
       .then(() => {
