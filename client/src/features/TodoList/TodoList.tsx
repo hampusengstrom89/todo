@@ -3,18 +3,21 @@ import List from '../../components/List';
 import Todo from '../Todo';
 import * as IF from '../../interfaces';
 import { useTodos } from '../../utils/providers/TodoContext';
+import Pagination from '../../components/Pagination';
 
 export const TodoList = (): ReactElement => {
   const { filteredTodos }: { filteredTodos: IF.Todo[] } = useTodos();
-
   return (
-    <List
-      items={filteredTodos}
-      renderItem={todo => (
-        <li key={todo.uuid}>
-          <Todo {...todo} />
-        </li>
+    <Pagination hits={10} items={filteredTodos}>
+      {items => (
+        <List items={items}>
+          {todo => (
+            <li key={todo.uuid}>
+              <Todo {...todo} />
+            </li>
+          )}
+        </List>
       )}
-    />
+    </Pagination>
   );
 };

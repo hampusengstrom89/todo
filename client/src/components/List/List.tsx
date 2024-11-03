@@ -3,8 +3,9 @@ import * as sc from './styled';
 
 interface ListProps<T> {
   items: T[];
-  renderItem: (item: T) => ReactNode;
+  children: (item: T) => ReactNode;
 }
-export const List = <T extends {}>({ items, renderItem }: ListProps<T>) => (
-  <sc.List>{items.map(item => renderItem(item))}</sc.List>
+
+export const List = <T extends {}>({ items, children }: ListProps<T>) => (
+  <sc.List>{items.map(item => children(item))}</sc.List>
 );
