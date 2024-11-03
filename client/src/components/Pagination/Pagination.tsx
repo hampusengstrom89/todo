@@ -25,6 +25,8 @@ export const Pagination = <T extends {}>({
     ),
   ];
 
+  useEffect(() => setActivePage(0), [items]);
+
   return (
     <div>
       {children(subItems)}
