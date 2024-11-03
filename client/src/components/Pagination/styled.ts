@@ -10,32 +10,31 @@ export const PaginationList = styled.ul`
   justify-content: center;
 `;
 
-interface PaginationButtonProps {
-  $active?: boolean;
+interface PaginationItemProps {
+  active?: boolean;
 }
-export const PaginationButton = styled.button<PaginationButtonProps>`
-  background-color: ${({ $active }) => ($active ? '#5a5a5a' : 'unset')};
-  padding: 2px 4px;
-  border-radius: 4px;
-  color: #ffffff;
-  justify-content: center;
-  align-items: center;
+export const PaginationItem = styled.li<PaginationItemProps>`
+  button {
+    color: #ffffff;
+    background-color: unset;
+    padding: 2px 4px;
+    border-radius: 4px;
+    background-color: unset;
 
-  &:nth-of-type(1),
-  &:nth-of-type(2),
-  &:nth-of-type(3),
-  &:nth-last-of-type(3),
-  &:nth-last-of-type(2),
-  &:nth-last-of-type(1) {
-    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:active,
+    &:focus,
+    &:focus-visible &:hover {
+      border: none;
+      outline: none;
+    }
   }
 
-  display: ${({ $active }) => ($active ? 'flex' : 'none')};
-
-  &:active,
-  &:focus,
-  &:focus-visible &:hover {
-    border: none;
-    outline: none;
+  &[data-active='true'] button {
+    background-color: #ffffff;
+    color: #bf5a54;
+    display: flex;
   }
 `;

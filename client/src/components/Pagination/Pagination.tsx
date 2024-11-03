@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { Fragment, ReactElement, useEffect, useState } from 'react';
 import * as sc from './styled';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
@@ -13,31 +13,55 @@ export const Pagination = <T extends {}>({
   hits,
   children,
 }: PaginationProps<T>) => {
-  const [page, setPage] = useState<number>(0);
+  const [activePage, setActivePage] = useState<number>(0);
 
-  const subItems = items.slice(page * hits, page * hits + hits);
+  const subItems = items.slice(activePage * hits, activePage * hits + hits);
   const numberOfPages = Math.ceil(items.length / hits);
-  const pages = Array.from(Array(numberOfPages));
+  const lastPage = Math.min(activePage + 1, numberOfPages - 1);
+  const pageProposal = [activePage - 1, activePage, activePage + 1];
+  const pages = [
+    ...new Set(
+      pageProposal.filter(page => page > 0 && page < numberOfPages - 1),
+    ),
+  ];
 
   return (
     <div>
       {children(subItems)}
       <sc.PaginationList>
-        <sc.PaginationButton onClick={() => setPage(Math.max(page - 1, 0))}>
-          <FaChevronLeft />
-        </sc.PaginationButton>
-        {pages.map((_, index) => (
-          <sc.PaginationButton
-            onClick={() => setPage(index)}
-            $active={page === index}>
-            {index + 1}
-          </sc.PaginationButton>
+        <sc.PaginationItem>
+          <button onClick={() => setActivePage(Math.max(activePage - 1, 0))}>
+            <FaChevronLeft />
+          </button>
+        </sc.PaginationItem>
+
+        <sc.PaginationItem data-active={activePage === 0}>
+          <button onClick={() => setActivePage(0)}>1</button>
+        </sc.PaginationItem>
+
+        {activePage > 2 && <sc.PaginationItem>...</sc.PaginationItem>}
+
+        {pages.map(page => (
+          <sc.PaginationItem key={page} data-active={activePage === page}>
+            <button onClick={() => setActivePage(page)}>{page + 1}</button>
+          </sc.PaginationItem>
         ))}
 
-        <sc.PaginationButton
-          onClick={() => setPage(Math.min(page + 1, numberOfPages - 1))}>
-          <FaChevronRight />
-        </sc.PaginationButton>
+        {activePage < numberOfPages - 3 && (
+          <sc.PaginationItem>...</sc.PaginationItem>
+        )}
+
+        <sc.PaginationItem data-active={activePage === numberOfPages - 1}>
+          <button onClick={() => setActivePage(numberOfPages - 1)}>
+            {numberOfPages}
+          </button>
+        </sc.PaginationItem>
+
+        <sc.PaginationItem>
+          <button onClick={() => setActivePage(lastPage)}>
+            <FaChevronRight />
+          </button>
+        </sc.PaginationItem>
       </sc.PaginationList>
     </div>
   );

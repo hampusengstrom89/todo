@@ -8,6 +8,7 @@ export const Header = styled.header`
   box-sizing: border-box;
   margin-bottom: 40px;
   align-items: center;
+  color: #ffffff;
 
   h1 {
     text-align: center;
