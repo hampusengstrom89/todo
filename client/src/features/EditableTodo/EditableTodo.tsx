@@ -8,26 +8,7 @@ import TextInput from '../../components/TextInput';
 import TextArea from '../../components/TextArea';
 import DateInput from '../../components/DateInput';
 import { getReadableDate } from '../../utils/helpers';
-
-const SaveButton = ({
-  handleClick,
-}: {
-  handleClick: IF.Button['onClick'];
-}): ReactElement => (
-  <sc.SaveButton onClick={handleClick}>
-    <FaCheck />
-  </sc.SaveButton>
-);
-
-const DeleteButton = ({
-  handleClick,
-}: {
-  handleClick: IF.Button['onClick'];
-}): ReactElement => (
-  <sc.DeleteButton onClick={handleClick}>
-    <RiDeleteBin6Line />
-  </sc.DeleteButton>
-);
+import Card from '../../components/Card';
 
 export const EditableTodo = ({
   title,
@@ -66,24 +47,32 @@ export const EditableTodo = ({
   };
 
   return (
-    <sc.EditableTodo $completed={completed}>
-      <TextInput
-        onChange={handleChange('title')}
-        value={newTodo.title}
-        placeHolder={'Enter a title'}
-        handleChangeOnBlur={true}
-      />
-      <TextArea
-        onChange={handleChange('description')}
-        value={newTodo.description}
-        placeHolder={'Enter a description'}
-      />
-      <DateInput
-        onChange={handleChange('dueDate')}
-        value={getReadableDate(newTodo.dueDate)}
-      />
-      <DeleteButton handleClick={handleDeleteClick} />
-      <SaveButton handleClick={handleDoneClick} />
-    </sc.EditableTodo>
+    <Card $inActive={completed}>
+      <sc.EditableTodo>
+        <TextInput
+          onChange={handleChange('title')}
+          value={newTodo.title}
+          placeHolder={'Enter a title'}
+          handleChangeOnBlur={true}
+        />
+        <TextArea
+          onChange={handleChange('description')}
+          value={newTodo.description}
+          placeHolder={'Enter a description'}
+        />
+        <DateInput
+          onChange={handleChange('dueDate')}
+          value={getReadableDate(newTodo.dueDate)}
+        />
+
+        <sc.DeleteButton onClick={handleDeleteClick}>
+          <RiDeleteBin6Line />
+        </sc.DeleteButton>
+
+        <sc.SaveButton onClick={handleDoneClick}>
+          <FaCheck />
+        </sc.SaveButton>
+      </sc.EditableTodo>
+    </Card>
   );
 };

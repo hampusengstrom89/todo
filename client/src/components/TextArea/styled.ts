@@ -7,4 +7,5 @@ export const TextArea = styled.textarea`
   color: #1a1a1a;
   resize: vertical;
   border-radius: 4px;
+  box-sizing: border-box;
 `;

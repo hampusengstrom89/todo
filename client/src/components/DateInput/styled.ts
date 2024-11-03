@@ -6,6 +6,7 @@ export const DateInput = styled.input`
   border: 1px solid gray;
   color: #1a1a1a;
   border-radius: 4px;
+  box-sizing: border-box;
 `;
 
 export const Label = styled.label`

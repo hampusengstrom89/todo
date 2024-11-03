@@ -1,29 +1,8 @@
 import styled from 'styled-components';
 import * as IF from '../../interfaces';
 
-interface TodoProps {
-  $completed: boolean;
-}
-
-export const Todo = styled.div<TodoProps>`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  padding: 12px 41px 12px 24px;
-  border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.8);
-  color: #1a1a1a;
-  width: 100%;
-  max-width: 350px;
-  border: 1px solid #884545;
-  min-height: 125px;
-  box-sizing: border-box;
-  padding-bottom: 48px;
-  ${props => (props.$completed ? 'opacity: 0.5;' : '')}
-  transition: 0.1s opacity ease-in-out;
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.9);
-  }
+export const Todo = styled.div`
+  padding: 0 0 24px 0;
 
   h2 {
     margin: 0 0 12px;

@@ -5,28 +5,7 @@ import { FaRegCircle, FaCircleCheck } from 'react-icons/fa6';
 
 import * as sc from './styled';
 import { getReadableDate } from '../../utils/helpers';
-
-const CheckButton = ({
-  handleClick,
-  checked,
-}: {
-  handleClick: IF.Button['onClick'];
-  checked: boolean;
-}): ReactElement => (
-  <sc.CheckButton onClick={handleClick}>
-    {checked ? <FaCircleCheck /> : <FaRegCircle />}
-  </sc.CheckButton>
-);
-
-const EditButton = ({
-  handleClick,
-}: {
-  handleClick: IF.Button['onClick'];
-}): ReactElement => (
-  <sc.EditButton onClick={handleClick}>
-    <FiEdit />
-  </sc.EditButton>
-);
+import Card from '../../components/Card';
 
 export const Todo = ({
   todo,
@@ -36,14 +15,18 @@ export const Todo = ({
   todo: IF.Todo;
   handleCheckClick: IF.Button['onClick'];
   handleEditClick: IF.Button['onClick'];
-}): ReactElement => {
-  return (
-    <sc.Todo $completed={todo.completed}>
+}): ReactElement => (
+  <Card $inActive={todo.completed}>
+    <sc.Todo>
       <h2>{todo.title}</h2>
       <p>{todo.description}</p>
-      <CheckButton handleClick={handleCheckClick} checked={todo.completed} />
-      <EditButton handleClick={handleEditClick} />
+      <sc.CheckButton onClick={handleCheckClick}>
+        {todo.completed ? <FaCircleCheck /> : <FaRegCircle />}
+      </sc.CheckButton>
+      <sc.EditButton onClick={handleEditClick}>
+        <FiEdit />
+      </sc.EditButton>
       <time>{getReadableDate(todo.dueDate)}</time>
     </sc.Todo>
-  );
-};
+  </Card>
+);

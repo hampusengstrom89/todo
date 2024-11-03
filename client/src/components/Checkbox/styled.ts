@@ -8,6 +8,7 @@ export const Checkbox = styled.input`
   border-radius: 4px;
   width: 16px;
   height: 16px;
+  box-sizing: border-box;
 `;
 
 export const Label = styled.label`
