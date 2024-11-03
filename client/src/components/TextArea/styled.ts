@@ -8,4 +8,5 @@ export const TextArea = styled.textarea`
   resize: vertical;
   border-radius: 4px;
   box-sizing: border-box;
+  font-size: 16px;
 `;

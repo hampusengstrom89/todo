@@ -16,4 +16,5 @@ export const Label = styled.label`
   justify-content: flex-start;
   gap: 16px;
   align-items: center;
+  font-size: 16px;
 `;

@@ -4,8 +4,9 @@ import { useTodos } from '../../utils/providers/TodoContext';
 import * as IF from '../../interfaces';
 import DateInput from '../../components/DateInput';
 
-import * as sc from './styled';
 import TextInput from '../../components/TextInput';
+import { Dropdown } from '../../components/Dropdown/Dropdown';
+import * as sc from './styled';
 
 interface FilterInterface {
   [key: string]: any;
@@ -31,12 +32,30 @@ const filterFunctions: FilterFunctionsInterface = {
       : true,
 };
 
+interface SortOptions {
+  name: string;
+  value: string;
+}
+
+const sortOptions: SortOptions[] = [
+  {
+    name: 'Alphabetically',
+    value: 'title',
+  },
+  {
+    name: 'Due date',
+    value: 'dueDate',
+  },
+];
+
 export const Filter = () => {
   const {
     todos,
+    filteredTodos,
     setFilteredTodos,
   }: {
     todos: IF.Todo[];
+    filteredTodos: IF.Todo[];
     setFilteredTodos: (newFilteredTodos: IF.Todo[]) => void;
   } = useTodos();
   const [filters, setFilters] = useState<FilterInterface>({
@@ -45,8 +64,21 @@ export const Filter = () => {
     endDate: null,
   });
 
+  const [sortByAttr, setSortByAttr] = useState<SortOptions>(sortOptions[0]);
+
   const handleChange = (attr: string) => (value: string | boolean | number) => {
     setFilters(prevFilters => ({ ...prevFilters, [attr]: value }));
+  };
+
+  const sortBy = (a: IF.Todo, b: IF.Todo) => {
+    const attr = sortByAttr.value as keyof IF.Todo;
+    if (a[attr] < b[attr]) {
+      return -1;
+    } else if (b[attr] === a[attr]) {
+      return 0;
+    } else {
+      return 1;
+    }
   };
 
   const filterTodos = () => {
@@ -57,20 +89,40 @@ export const Filter = () => {
         filterFunctions[key](filters[key], todo),
       ),
     );
+    filteredTodos.sort(sortBy);
     setFilteredTodos(filteredTodos);
+  };
+
+  const handleSortChange = (value: string) => {
+    const match = sortOptions.find(sortByAttr => sortByAttr.value === value);
+    if (match) {
+      setSortByAttr(match);
+    }
   };
 
   useEffect(() => {
     filterTodos();
   }, [filters, todos]);
 
+  useEffect(() => {
+    const sortedFilteredTodos = [...filteredTodos].sort(sortBy);
+    setFilteredTodos(sortedFilteredTodos);
+  }, [sortByAttr]);
+
   return (
     <sc.FilterContainer>
-      <sc.Sort>
+      <sc.Search>
         <TextInput
           onChange={handleChange('search')}
           value={''}
           placeHolder="Search for todos"
+        />
+      </sc.Search>
+      <sc.Sort>
+        <Dropdown
+          activeOption={sortByAttr}
+          onChange={handleSortChange}
+          options={sortOptions}
         />
       </sc.Sort>
       <sc.Filter>

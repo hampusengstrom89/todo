@@ -35,6 +35,33 @@ export const Filter = styled.div`
   }
 `;
 
+export const Search = styled.div`
+  display: flex;
+  column-gap: 16px;
+  row-gap: 4px;
+  width: 100%;
+  max-width: 350px;
+  padding: 16px;
+  border: 1px solid white;
+  border-radius: 8px;
+  box-sizing: border-box;
+  position: relative;
+
+  input {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  &:after {
+    content: 'Search';
+    position: absolute;
+    top: 0;
+    left: 10px;
+    background-color: #5a5a5a;
+    transform: translateY(-60%);
+    padding: 0 12px;
+  }
+`;
 export const Sort = styled.div`
   display: flex;
   column-gap: 16px;
