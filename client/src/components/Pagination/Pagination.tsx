@@ -1,6 +1,14 @@
-import { Fragment, ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import * as sc from './styled';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+
+const getPages = (activePage: number, numberOfPages: number) => [
+  ...new Set(
+    [activePage - 1, activePage, activePage + 1].filter(
+      page => page > 0 && page < numberOfPages - 1,
+    ),
+  ),
+];
 
 interface PaginationProps<T> {
   items: T[];
@@ -18,12 +26,7 @@ export const Pagination = <T extends {}>({
   const subItems = items.slice(activePage * hits, activePage * hits + hits);
   const numberOfPages = Math.ceil(items.length / hits);
   const lastPage = Math.min(activePage + 1, numberOfPages - 1);
-  const pageProposal = [activePage - 1, activePage, activePage + 1];
-  const pages = [
-    ...new Set(
-      pageProposal.filter(page => page > 0 && page < numberOfPages - 1),
-    ),
-  ];
+  const pages = getPages(activePage, numberOfPages);
 
   useEffect(() => setActivePage(0), [items]);
 
