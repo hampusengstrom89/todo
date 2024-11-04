@@ -7,7 +7,7 @@ interface ErrorMessageProps {
 export const ErrorMessage = (props: ErrorMessageProps): ReactElement => {
   return (
     <sc.ErrorMessage>
-      <h2>Fel!</h2>
+      <h2>Error!</h2>
       {props.children}
     </sc.ErrorMessage>
   );

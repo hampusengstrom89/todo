@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useRef, useState } from 'react';
 import * as IF from '../../interfaces';
 import { FaCheck } from 'react-icons/fa';
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -10,69 +10,70 @@ import DateInput from '../../components/DateInput';
 import { getReadableDate } from '../../utils/helpers';
 import Card from '../../components/Card';
 
-export const EditableTodo = ({
-  title,
-  description,
-  completed,
-  dueDate,
-  onComplete,
-  handleDeleteClick,
-}: {
+export interface NewTodoInterface {
   title: IF.Todo['title'];
   description: IF.Todo['description'];
   completed: IF.Todo['completed'];
   dueDate: IF.Todo['dueDate'];
+}
+
+interface EditableTodoProps {
+  newTodo: NewTodoInterface;
+  handleChange: (attr: string) => (value: string | number) => void;
   onComplete: (
     title: IF.Todo['title'],
     description: IF.Todo['description'],
     completed: IF.Todo['completed'],
     dueDate: IF.Todo['dueDate'],
-  ) => void;
+  ) => boolean;
   handleDeleteClick: () => void;
-}): ReactElement => {
-  const [newTodo, setNewTodo] = useState({
-    title,
-    description,
-    completed,
-    dueDate,
-  });
+}
+
+export const EditableTodo = (props: EditableTodoProps): ReactElement => {
+  const $editableTodoRef = useRef<HTMLElement>(null);
+  const { newTodo, handleChange, handleDeleteClick, onComplete } = props;
 
   const handleDoneClick = () => {
     const { title, description, completed, dueDate } = newTodo;
-    onComplete(title, description, completed, dueDate);
-  };
-
-  const handleChange = (attr: string) => (value: string | number) => {
-    setNewTodo(newTodo => ({ ...newTodo, [attr]: value }));
+    const didComplete = onComplete(title, description, completed, dueDate);
+    if (!didComplete) {
+      $editableTodoRef.current?.classList.add('error');
+      setTimeout(
+        () => $editableTodoRef.current?.classList.remove('error'),
+        1000,
+      );
+    }
   };
 
   return (
-    <Card $inActive={completed}>
-      <sc.EditableTodo>
-        <TextInput
-          onChange={handleChange('title')}
-          value={newTodo.title}
-          placeHolder={'Enter a title'}
-          handleChangeOnBlur={true}
-        />
-        <TextArea
-          onChange={handleChange('description')}
-          value={newTodo.description}
-          placeHolder={'Enter a description'}
-        />
-        <DateInput
-          onChange={handleChange('dueDate')}
-          value={getReadableDate(newTodo.dueDate)}
-        />
+    <sc.EditableTodo ref={$editableTodoRef}>
+      <Card $inActive={newTodo.completed}>
+        <>
+          <TextInput
+            onChange={handleChange('title')}
+            value={newTodo.title}
+            placeHolder={'Enter a title'}
+            handleChangeOnBlur={true}
+          />
+          <TextArea
+            onChange={handleChange('description')}
+            value={newTodo.description}
+            placeHolder={'Enter a description'}
+          />
+          <DateInput
+            onChange={handleChange('dueDate')}
+            value={getReadableDate(newTodo.dueDate)}
+          />
 
-        <sc.DeleteButton onClick={handleDeleteClick}>
-          <RiDeleteBin6Line />
-        </sc.DeleteButton>
+          <sc.DeleteButton onClick={handleDeleteClick}>
+            <RiDeleteBin6Line />
+          </sc.DeleteButton>
 
-        <sc.SaveButton onClick={handleDoneClick}>
-          <FaCheck />
-        </sc.SaveButton>
-      </sc.EditableTodo>
-    </Card>
+          <sc.SaveButton onClick={handleDoneClick}>
+            <FaCheck />
+          </sc.SaveButton>
+        </>
+      </Card>
+    </sc.EditableTodo>
   );
 };

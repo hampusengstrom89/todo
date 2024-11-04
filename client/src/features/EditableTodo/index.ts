@@ -1,1 +1,1 @@
-export { EditableTodo as default } from './EditableTodo';
+export { EditableTodoContainer as default } from './EditableTodoContainer';

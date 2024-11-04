@@ -1,23 +1,45 @@
 import styled from 'styled-components';
 import * as IF from '../../interfaces';
+import { RefObject } from 'react';
 
-export const EditableTodo = styled.div`
+interface EditableTodoProps {
+  ref: RefObject<HTMLElement>;
+}
+
+export const EditableTodo = styled.div<EditableTodoProps>`
   opacity: 1;
-  padding: 0 16px 36px 0;
+  width: 100%;
+
+  & > div {
+    padding: 12px 48px 48px 12px;
+    position: relative;
+  }
 
   input[type='text'] {
     margin-bottom: 5px;
     font-size: 16px;
     width: 100%;
   }
+
   input[type='date'] {
     position: absolute;
-    left: 24px;
+    left: 12px;
     bottom: 8px;
   }
+
   textArea {
     font-size: 12px;
     width: 100%;
+  }
+
+  &.error > div {
+    animation: errorFlash 500ms linear infinite;
+
+    @keyframes errorFlash {
+      50% {
+        background-color: #fc8a8a;
+      }
+    }
   }
 `;
 
