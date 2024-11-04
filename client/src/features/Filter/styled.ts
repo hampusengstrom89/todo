@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const FilterContainer = styled.div`
+export const Filter = styled.div`
   width: 100%;
   background-color: #5a5a5a;
   display: flex;
@@ -11,7 +11,7 @@ export const FilterContainer = styled.div`
   gap: 16px;
 `;
 
-export const Filter = styled.div`
+export const FilterArea = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   column-gap: 16px;
@@ -35,7 +35,7 @@ export const Filter = styled.div`
   }
 `;
 
-export const Search = styled.div`
+export const SearchArea = styled.div`
   display: flex;
   column-gap: 16px;
   row-gap: 4px;
@@ -62,7 +62,7 @@ export const Search = styled.div`
     padding: 0 12px;
   }
 `;
-export const Sort = styled.div`
+export const SortArea = styled.div`
   display: flex;
   column-gap: 16px;
   row-gap: 4px;

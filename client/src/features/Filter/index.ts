@@ -1,1 +1,1 @@
-export { Filter as default } from './Filter';
+export { FilterContainer as default } from './FilterContainer';
