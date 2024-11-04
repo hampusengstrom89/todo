@@ -17,25 +17,21 @@ export const TodoContainer = (todo: IF.Todo): ReactElement => {
   const [checkTimeout, setCheckTimeout] =
     useState<ReturnType<typeof setTimeout>>();
 
-  const clearCheckTimeout = () => {
-    debugger;
-    clearTimeout(checkTimeout);
-  };
+  const clearCheckTimeout = () => clearTimeout(checkTimeout);
 
-  const handleCheckClick =
-    (checkTimeout: ReturnType<typeof setTimeout>) => () => {
-      if (!isChecked) {
-        setCheckTimeout(
-          setTimeout(
-            () => editTodo({ ...todo, completed: !todo.completed }),
-            2000,
-          ),
-        );
-      } else {
-        clearCheckTimeout();
-      }
-      setIsChecked(prev => !prev);
-    };
+  const handleCheckClick = () => {
+    if (!isChecked) {
+      setCheckTimeout(
+        setTimeout(
+          () => editTodo({ ...todo, completed: !todo.completed }),
+          2000,
+        ),
+      );
+    } else {
+      clearCheckTimeout();
+    }
+    setIsChecked(prev => !prev);
+  };
 
   const handleEditClick = () => setIsEdit(true);
 
@@ -60,7 +56,7 @@ export const TodoContainer = (todo: IF.Todo): ReactElement => {
   ) : (
     <Todo
       todo={{ ...todo, completed: isChecked }}
-      handleCheckClick={handleCheckClick(checkTimeout)}
+      handleCheckClick={handleCheckClick}
       handleEditClick={handleEditClick}
     />
   );
