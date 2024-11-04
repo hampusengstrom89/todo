@@ -2,8 +2,6 @@ import styled from 'styled-components';
 import * as IF from '../../interfaces';
 
 export const Todo = styled.div`
-  padding: 0 0 24px 0;
-
   h2 {
     margin: 0 0 12px;
     padding: 0;

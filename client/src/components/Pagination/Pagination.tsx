@@ -56,11 +56,13 @@ export const Pagination = <T extends {}>({
           <sc.PaginationItem>...</sc.PaginationItem>
         )}
 
-        <sc.PaginationItem data-active={activePage === numberOfPages - 1}>
-          <button onClick={() => setActivePage(numberOfPages - 1)}>
-            {numberOfPages}
-          </button>
-        </sc.PaginationItem>
+        {numberOfPages > 1 && (
+          <sc.PaginationItem data-active={activePage === numberOfPages - 1}>
+            <button onClick={() => setActivePage(numberOfPages - 1)}>
+              {numberOfPages}
+            </button>
+          </sc.PaginationItem>
+        )}
 
         <sc.PaginationItem>
           <button onClick={() => setActivePage(lastPage)}>
