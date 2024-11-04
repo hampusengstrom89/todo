@@ -13,7 +13,6 @@ interface TodoContextValue {
   todos: IF.Todo[];
   filteredTodos: IF.Todo[];
   setFilteredTodos: (newFilteredTodos: IF.Todo[]) => void;
-  isFetching: boolean;
   addTodo: (
     title: IF.Todo['title'],
     description: IF.Todo['description'],
@@ -27,7 +26,6 @@ interface TodoContextValue {
 const todoInitial: TodoContextValue = {
   todos: [],
   filteredTodos: [],
-  isFetching: true,
   setFilteredTodos: () => {},
   addTodo: () => {},
   deleteTodo: () => {},
@@ -43,19 +41,16 @@ const TodoProvider = ({
 }): ReactElement => {
   const [todos, setTodos] = useState<IF.Todo[]>([]);
   const [filteredTodos, setFilteredTodos] = useState<IF.Todo[]>([]);
-  const [isFetching, setIsFetching] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     api
       .getTodos()
       .then(todos => {
-        setIsFetching(false);
         setTodos(todos);
         setFilteredTodos(todos);
       })
       .catch(error => {
-        setIsFetching(false);
         setError(`Something went wrong while loading todos: ${error.message}`);
         setTimeout(() => setError(null), 2000);
       });
@@ -120,7 +115,6 @@ const TodoProvider = ({
     todos,
     setFilteredTodos,
     filteredTodos,
-    isFetching,
     addTodo,
     deleteTodo,
     editTodo,
