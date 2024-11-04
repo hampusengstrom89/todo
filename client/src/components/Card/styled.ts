@@ -13,8 +13,7 @@ export const Card = styled.div<CardProps>`
   background-color: rgba(255, 255, 255, 0.8);
   color: #1a1a1a;
   width: 100%;
-  max-width: 350px;
-  border: 1px solid #884545;
+  border: 1px solid #c2b7af;
   min-height: 125px;
   box-sizing: border-box;
   transition: 0.1s opacity ease-in-out;

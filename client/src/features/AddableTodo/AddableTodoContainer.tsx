@@ -12,17 +12,6 @@ const todoTemplate = {
   completed: false,
 };
 
-const CreateTodoButton = ({
-  handleClick,
-}: {
-  handleClick: IF.Button['onClick'];
-}) => (
-  <sc.CreateTodoButton onClick={handleClick}>
-    Add new Todo
-    <IoMdAddCircleOutline />
-  </sc.CreateTodoButton>
-);
-
 export const AddableTodoContainer = () => {
   const {
     addTodo,
@@ -60,6 +49,9 @@ export const AddableTodoContainer = () => {
       handleDeleteClick={handleDeleteClick}
     />
   ) : (
-    <CreateTodoButton handleClick={handleCreateClick} />
+    <sc.CreateTodoButton onClick={handleCreateClick}>
+      Add new Todo
+      <IoMdAddCircleOutline />
+    </sc.CreateTodoButton>
   );
 };
