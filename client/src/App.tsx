@@ -8,7 +8,9 @@ function App() {
   return (
     <>
       <sc.Header>
-        <h1>Todo</h1>
+        <sc.Title>
+          <h1>Todo.</h1>
+        </sc.Title>
         <Filter />
       </sc.Header>
       <sc.Main>

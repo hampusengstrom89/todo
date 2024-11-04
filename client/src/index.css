@@ -26,12 +26,8 @@ body {
   display: flex;
   place-items: center;
   min-height: 100vh;
-  background: rgb(190, 90, 84);
-  background: linear-gradient(
-    0deg,
-    rgba(190, 90, 84, 1) 0%,
-    rgba(250, 175, 147, 1) 100%
-  );
+  background: #eeeae6;
+  background: linear-gradient(0deg, #d7d3ce 0%, #eeeae6 100%);
 }
 
 h1 {
