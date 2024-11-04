@@ -51,10 +51,6 @@ const TodoProvider = ({
   const [isFetching, setIsFetching] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // const setFilteredTodos = (newFilteredTodos: IF.Todo[]) => {
-  //   setFilteredTodos(newFilteredTodos);
-  // };
-
   useEffect(() => {
     api
       .getTodos()
