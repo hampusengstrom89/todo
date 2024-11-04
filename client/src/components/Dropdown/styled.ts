@@ -7,7 +7,7 @@ interface DropdownListProps {
 export const Dropdown = styled.div<DropdownListProps>`
   position: relative;
   width: 100%;
-  max-width: 350px;
+  max-width: 480px;
 
   > button {
     background-color: #ffffff;

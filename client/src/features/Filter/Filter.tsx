@@ -13,29 +13,42 @@ export const Filter = (
   sortOptions: SortOptions[],
   filters: FilterInterface,
 ): ReactElement => (
-  <sc.Filter>
-    <sc.SearchArea>
-      <TextInput
-        onChange={handleChange('search')}
-        value={''}
-        placeHolder="Search for todos"
-      />
-    </sc.SearchArea>
-    <sc.SortArea>
-      <Dropdown
-        activeOption={sortByAttr}
-        onChange={handleSortChange}
-        options={sortOptions}
-      />
-    </sc.SortArea>
-    <sc.FilterArea>
-      <Checkbox
-        label="Completed"
-        onChange={handleChange('completed')}
-        checked={filters.completed}
-      />
-      <DateInput label="Start date" onChange={handleChange('startDate')} />
-      <DateInput label="End date" onChange={handleChange('endDate')} />
-    </sc.FilterArea>
-  </sc.Filter>
+  <>
+    <sc.Filter>
+      <sc.FilterArea>
+        <sc.FilterCompleted>
+          <Checkbox
+            label="Completed"
+            onChange={handleChange('completed')}
+            checked={filters.completed}
+          />
+        </sc.FilterCompleted>
+
+        <sc.FilterDate>
+          <DateInput label="Start date:" onChange={handleChange('startDate')} />
+        </sc.FilterDate>
+        <sc.FilterDate>
+          <DateInput label="End date:" onChange={handleChange('endDate')} />
+        </sc.FilterDate>
+      </sc.FilterArea>
+
+      <sc.Search>
+        <sc.SearchArea>
+          <TextInput
+            onChange={handleChange('search')}
+            value={''}
+            placeHolder="Search for todos"
+          />
+        </sc.SearchArea>
+      </sc.Search>
+
+      <sc.SortArea>
+        <Dropdown
+          activeOption={sortByAttr}
+          onChange={handleSortChange}
+          options={sortOptions}
+        />
+      </sc.SortArea>
+    </sc.Filter>
+  </>
 );

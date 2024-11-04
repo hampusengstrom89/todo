@@ -6,10 +6,10 @@ export const List = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 16px auto;
+  margin: 16px 0;
   gap: 16px;
   box-sizing: border-box;
-  width: 350px;
+  width: 100%;
 
   li {
     width: 100%;

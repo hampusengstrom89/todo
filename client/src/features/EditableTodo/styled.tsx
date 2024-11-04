@@ -70,12 +70,18 @@ export const DeleteButton = styled(DefaultButton)`
   position: absolute;
   right: 5px;
   top: 5px;
-  opacity: 0.2;
   transition: opacity 0.2s ease-in-out;
   border-radius: 7px;
 
+  svg {
+    fill: #f2ad4a;
+    opacity: 0.5;
+  }
   &:hover {
-    opacity: 1;
+    svg {
+      fill: #f2ad4a;
+      opacity: 1;
+    }
   }
 `;
 
@@ -85,9 +91,13 @@ export const SaveButton = styled(DefaultButton)`
   bottom: 5px;
   border-radius: 7px;
   svg {
-    stroke: #1a1a1a;
+    fill: #f2ad4a;
+    opacity: 0.5;
   }
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    svg {
+      fill: #f2ad4a;
+      opacity: 1;
+    }
   }
 `;
