@@ -1,4 +1,4 @@
-import express, { Express, Request, Response, Application } from "express";
+import express, { Application } from "express";
 import * as todoController from "./controllers/todoController";
 
 const app: Application = express();

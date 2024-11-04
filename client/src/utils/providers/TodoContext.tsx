@@ -6,7 +6,7 @@ import {
   ReactElement,
 } from 'react';
 import * as api from '../../api';
-import * as IF from '../../interfaces';
+import * as IF from '../../features/Todo/interface';
 import { ErrorMessage } from '../../components/ErrorMessage';
 
 interface TodoContextValue {
@@ -28,15 +28,10 @@ const todoInitial: TodoContextValue = {
   todos: [],
   filteredTodos: [],
   isFetching: true,
-  setFilteredTodos: (newFilteredTodos: IF.Todo[]) => {},
-  addTodo: (
-    title: IF.Todo['title'],
-    description: IF.Todo['description'],
-    completed: IF.Todo['completed'],
-    dueDate: IF.Todo['dueDate'],
-  ) => {},
-  deleteTodo: (uuid: IF.Todo['uuid']) => {},
-  editTodo: (editedTodo: IF.Todo) => {},
+  setFilteredTodos: () => {},
+  addTodo: () => {},
+  deleteTodo: () => {},
+  editTodo: () => {},
 };
 
 const TodoContext = createContext<TodoContextValue>(todoInitial);

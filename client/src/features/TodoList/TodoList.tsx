@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import List from '../../components/List';
 import Todo from '../Todo';
-import * as IF from '../../interfaces';
+import * as IF from '../Todo/interface';
 import { useTodos } from '../../utils/providers/TodoContext';
 import Pagination from '../../components/Pagination';
 

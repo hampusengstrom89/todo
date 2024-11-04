@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import * as IF from '../../interfaces';
+import * as IF from './interface';
 import { FaChevronDown } from 'react-icons/fa';
 import * as sc from './styled';
 

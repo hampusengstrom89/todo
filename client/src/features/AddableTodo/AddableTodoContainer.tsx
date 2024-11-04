@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import EditableTodo from '../EditableTodo';
 import { useTodos } from '../../utils/providers/TodoContext';
-import * as IF from '../../interfaces';
+import * as IF from '../Todo/interface';
 import * as sc from './styled';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 

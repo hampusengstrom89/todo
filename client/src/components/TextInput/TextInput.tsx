@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import * as IF from '../../interfaces';
+import * as IF from './interface';
 import * as sc from './styled';
 
 export const TextInput = (props: IF.TextInput) => {

@@ -1,5 +1,5 @@
 import { EditableTodo, NewTodoInterface } from './EditableTodo';
-import * as IF from '../../interfaces';
+import * as IF from '../Todo/interface';
 import { ReactElement, useState } from 'react';
 
 interface EditableTodoProps {

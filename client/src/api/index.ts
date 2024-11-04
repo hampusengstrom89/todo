@@ -1,4 +1,4 @@
-import * as IF from '../interfaces';
+import * as IF from '../features/Todo';
 
 const BASE_URL = 'http://localhost:8000';
 

@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from 'react';
 import { useTodos } from '../../utils/providers/TodoContext';
-import * as IF from '../../interfaces';
+import * as IF from '../Todo/interface';
 import { Filter } from './Filter';
 
 export interface FilterInterface {

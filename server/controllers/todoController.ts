@@ -3,9 +3,6 @@ import * as Todo from "../models/todoModel";
 import { v4 as uuidv4 } from "uuid";
 import * as IF from "../interfaces";
 
-const DEFAULT_OFFSET = 0;
-const DEFAULT_LIMIT = 10;
-
 export const todos_get = (
   req: Request,
   res: Response,

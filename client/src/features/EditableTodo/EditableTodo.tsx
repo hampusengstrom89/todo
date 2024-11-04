@@ -1,5 +1,5 @@
 import { ReactElement, useRef } from 'react';
-import * as IF from '../../interfaces';
+import * as IF from '../Todo/interface';
 import { FaCheck } from 'react-icons/fa';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 

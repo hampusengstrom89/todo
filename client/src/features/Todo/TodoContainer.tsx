@@ -1,6 +1,6 @@
 import { Todo } from './Todo';
 import EditableTodo from '../EditableTodo';
-import * as IF from '../../interfaces';
+import * as IF from './interface';
 import { ReactElement, useState } from 'react';
 import { useTodos } from '../../utils/providers/TodoContext';
 
@@ -12,6 +12,7 @@ export const TodoContainer = (todo: IF.Todo): ReactElement => {
     editTodo: (editedTodo: IF.Todo) => void;
     deleteTodo: (uuid: IF.Todo['uuid']) => void;
   } = useTodos();
+
   const [isChecked, setIsChecked] = useState<boolean>(todo.completed);
   const [isEdit, setIsEdit] = useState<Boolean>(false);
   const [checkTimeout, setCheckTimeout] =
