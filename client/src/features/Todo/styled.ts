@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import * as IF from '../../interfaces';
+import * as IF from '../../components/Button/interface';
 
 export const Todo = styled.div`
   & > div {

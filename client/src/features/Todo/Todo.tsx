@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
-import * as IF from '../../interfaces';
+import * as IF from './interface';
+import { Button as ButtonInterface } from '../../components/Button/interface';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegCircle, FaCircleCheck } from 'react-icons/fa6';
 
@@ -13,8 +14,8 @@ export const Todo = ({
   handleEditClick,
 }: {
   todo: IF.Todo;
-  handleCheckClick: IF.Button['onClick'];
-  handleEditClick: IF.Button['onClick'];
+  handleCheckClick: ButtonInterface['onClick'];
+  handleEditClick: ButtonInterface['onClick'];
 }): ReactElement => (
   <sc.Todo>
     <Card $inActive={todo.completed}>

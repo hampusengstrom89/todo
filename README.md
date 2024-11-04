@@ -4,7 +4,7 @@
 
 The client application is built in reactjs with typescript and runs with vite.
 It consists of a set of reusable generic components, features with more todo specific components, utils with a provider for todos.
-The layout consists of a <header> containing a logo, filter-, sort- and search functionality, meanwhile the <main> element contains the todo list and the pagination.
+The layout consists of a <header> containing a logo, filter-, sort- and search functionality, meanwhile the <main> element contains the functionality to add a todo, to edit a todo, the list of todos and the pagination.
 
 # TODO - SERVER
 
