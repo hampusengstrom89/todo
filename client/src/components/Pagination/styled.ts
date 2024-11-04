@@ -8,6 +8,7 @@ export const PaginationList = styled.ul`
   padding: 0;
   gap: 5px;
   justify-content: center;
+  color: #ffffff;
 `;
 
 interface PaginationItemProps {
@@ -19,7 +20,6 @@ export const PaginationItem = styled.li<PaginationItemProps>`
     background-color: unset;
     padding: 2px 4px;
     border-radius: 4px;
-    background-color: unset;
 
     justify-content: center;
     align-items: center;
@@ -33,8 +33,8 @@ export const PaginationItem = styled.li<PaginationItemProps>`
   }
 
   &[data-active='true'] button {
-    background-color: #ffffff;
-    color: #bf5a54;
+    background-color: #f2ad4a;
+    color: #ffffff;
     display: flex;
   }
 `;

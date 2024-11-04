@@ -31,7 +31,7 @@ export const Pagination = <T extends {}>({
   useEffect(() => setActivePage(0), [items]);
 
   return (
-    <div>
+    <>
       {children(subItems)}
       <sc.PaginationList>
         <sc.PaginationItem>
@@ -70,6 +70,6 @@ export const Pagination = <T extends {}>({
           </button>
         </sc.PaginationItem>
       </sc.PaginationList>
-    </div>
+    </>
   );
 };
