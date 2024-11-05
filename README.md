@@ -2,66 +2,115 @@
 
 ## Description
 
-The client application is built in reactjs with typescript and runs with vite.
-It consists of a set of reusable generic components, features with more todo specific components, utils with a provider for todos.
-The layout consists of a <header> containing a logo, filter-, sort- and search functionality, meanwhile the <main> element contains the functionality to add a todo, to edit a todo, the list of todos and the pagination.
+The client part of the application is built in ReactJS with TypeScript and runs with Vite.
 
-TodoContext is the main state for todos, it contains the array of todos, functionality for updating todos (adding / deleting / editing) and also syncing the todos with the server side storage. The TodoContext is needed due to the spread functionality of adding, editing, filtering, sorting, searching etc all finally resulting in a updated list.
+## Architecture
 
-The components and features has been divided in several files for interface, styled-components and functional component.
-The features also uses containers to extract logic from the functional (view) components.
+The application consists of a set of reusable generic components, features with more todo specific components, utils with a provider for todos.
+Using generic components with no application specific code makes it easier to reuse them between projects instead of writing them for every project.
 
-There is also a folder, api, which is the endpoints on the client side for communicating with the server RESTapi. The api is only called by the TodoContext.
+There is a centralized main state of the todos which is held by the TodoContext. It contains the array of todos, functionality for updating todos (adding / deleting / editing) and it also syncs the current state of todos with the server and its storage. The TodoContext is needed due to the wide spread of functionality for adding, editing, filtering, sorting, searching etc, all finally resulting in an updated list.
 
-There is a filter feature which holds the functionality of filtering and sorting the list of todos. The filter component registers filter changes and performs the filtering and sorting operations on the todos array which is then provided to the TodoContext which holds the array of filteredTodos.
+## Layout
 
-Worth noting is that I, with more time, would have investigated the possiblity to extract filtering logic to a FilteringContext. I'm not sure yet if it is worth centeralizing or not. It might be fine as it is for the current task.
+The layout consists of header, main, footer
+
+- header: contains a logo, filter-, sort- and search functionality
+- main: contains the functionality for adding / editing / deliting a todo, the list of todos and pagination.
+
+- Filter: The filter feature holds the functionality such as filtering and sorting the list of todos. The filter handles filter changes and performs the filtering and sorting operations on the todos which is then provided to the TodoContext.
+
+It is worth noting that, with more time, I would have investigated the possibility to extract the filtering logic to a FilterContext. I'm not sure yet if it is worth centralizing this at the current state of the application.
 
 The application contains no tests, this was not prioritized from my side due to the provided time and the requirements for the task.
 
 ## File structure
 
-/api - Client side endpoints for communcation with server. this api is only utilized by the TodoContext.
-/components - Generic and reusable components with minimal logic
-/features - Extensive components with their own logic and specific components
-/utils/providers - The providers/contexts of the application
+The components and features has been divided into several files: interface, styled-components and functional component.
+The features also uses containers to extract logic from the functional (view) components.
+
+### Folder structure
+
+| Folder           | Description                                                                                 |
+| ---------------- | ------------------------------------------------------------------------------------------- |
+| /api             | Client side endpoints for server communcation. This API is only utilized by the TodoContext |
+| /components      | Generic and reusable components with minimal logic                                          |
+| /features        | Extensive components with their own logic and group of specific components                  |
+| /utils/providers | The providers of the application                                                            |
 
 ## Getting Started
 
-1. Run the command "npm install" to install all dependencies
-2. Run the command "npm run dev" to start the client application at port 5173
-3. Open http://localhost:5173/ to use the client side of the application
+Install all dependencies
+
+```
+$ npm install
+```
+
+Start the application at port 5173
+
+```
+$ npm run dev
+```
+
+To use the client side of the application
+Open http://localhost:5173/
 
 # TODO - SERVER
 
 ## Description
 
-The server (RESTapi) part of the todo application. The server is built in node with expressjs and typescript.
-The server consists of a few routes, a controller, a model and the storage.
-This approach makes it easier to switch the storage for example a database, add handling for different models and controlles for using reminders etc.
+### Architecture
 
-A request is received by the server and is referred to the todoController by the routes.
-The todoController handles the request by validating incoming data.
+The server part of the todo application is a RESTapi built in NodeJS using ExpressJS and TypeScript.
 
-If the data is invalid a 4xx status is sent back.
+It consists of routes, a controller, a model and a storage file.
 
-If the data passes the validation the todoController then tells the todoModel to perform the requested operation on the todos in storage.
+I like this approach due to its clear separation of responsibilities.
+This approach also makes it easier to replace the storage with a database, add different types of data with its own controllers and models.
 
-request --> routes --> controller --> model --> storage
+### Flow
+
+A request is received by the server routes and is passed to the controller.
+The controller handles the request by validating incoming data.
+
+- If the validation is unsuccessful, the controller will send a 4xx status back.
+
+- If the validation is successful, the controller will call the model. The model then performs the simple data operations requested to the data in storage, and then send a 200 status back.
+
+```
+request -> routes -> controller -> model -> storage
+```
 
 ## File structure
 
-/controllers - The controllers implements the main logic such as handling requests and responses, validation
-/models - The models implements logic for loading the storage, updating the todos and saving to storage
-/storage - A single .json file storing all todos
-index - The request routes
+Explanation regarding the file structure
+
+### Folder structure
+
+| Folder       | Description                                                                                   |
+| ------------ | --------------------------------------------------------------------------------------------- |
+| /controllers | The controllers implements the main logic such as handling requests and responses, validation |
+| /models      | The models implements logic for loading the storage, updating the todos and saving to storage |
+| /storage     | A single .json file storing all todos                                                         |
+|  index       | The file with routing                                                                         |
 
 ## Getting Started
 
-1. Run the command "npm install" to install all dependencies
-2. Run the command "npm run dev" to start the server at port 8000
+Install all dependencies
 
-## API Documentation
+```
+$ npm install
+```
+
+Start the server at port 8000
+
+```
+$ npm run dev
+```
+
+## Data of todo
+
+A todo consists of a set of attributes as shown below
 
 ```
 Todo: {
@@ -73,69 +122,57 @@ Todo: {
 }
 ```
 
+## API Documentation
+
+| Request | Path         | Operation                                   | Response                                 |
+| ------- | ------------ | ------------------------------------------- | ---------------------------------------- |
+| GET     | /            | Redirects to /todos                         |                                          |
+| GET     | /todos       | Gets all todos                              | An array of all todos                    |
+| GET     | /todos/:uuid | Gets a single todo                          | The requested todo with a specified uuid |
+|         |              |                                             |                                          |
+| PUT     | /todos/:uuid | Edits a single todo with a specified uuid   | The edited todo                          |
+|         |              |                                             |                                          |
+| POST    | /todos       | Adds a single todo                          | The added todo                           |
+| DELETE  | /todos/:uuid | Deletes a single todo with a specified uuid | The deleted todo                         |
+
+## Code examples
+
+### GET /todos
+
 ```
-GET /
-
-redirects to /todos
-
----------------------------------------------------------------------------------------
-
-GET /todos
-
-Returns an array of todos
-
-Example:
-
 fetch(`http://localhost:8000/todos`)
+```
 
----------------------------------------------------------------------------------------
+### GET /todos/:uuid
 
-GET /todos/:uuid
-
-Returns a specific todo with a given uuid
-
-Example:
-
+```
 fetch(`http://localhost:8000/todos/${uuid}`)
+```
 
----------------------------------------------------------------------------------------
+### PUT /todos/:uuid
 
-PUT /todos/:uuid
-
-Edits a todo with a given uuid, returns the todo after being edit
-
-Example:
-
+```
 fetch(`http://localhost:8000/todos/${uuid}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({todo}),
+    body: JSON.stringify({ uuid, title, description, completed, dueDate }),
 })
+```
 
----------------------------------------------------------------------------------------
+### POST /todos
 
-POST /todos
-
-Adds a todo without uuid, returns the todo with uuid after being added
-
-Example:
-
+```
 fetch(`http://localhost:8000/todos`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ title, description, completed, dueDate }),
-  })
+})
+```
 
----------------------------------------------------------------------------------------
+### DELETE /todos/:uuid
 
-DELETE /todos/:uuid
-
-Deletes a specific todo with a given uuid, returns the todo after being deleted
-
-Example:
-
-fetch(`${BASE_URL}/todos/${uuid}`, { method: 'DELETE' })
-
----------------------------------------------------------------------------------------
-
+```
+fetch(`http://localhost:8000/todos/${uuid}`, {
+    method: 'DELETE'
+})
 ```
