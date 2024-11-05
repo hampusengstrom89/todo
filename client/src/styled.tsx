@@ -50,3 +50,15 @@ export const Main = styled.main`
     padding: 0 16px;
   }
 `;
+
+export const Footer = styled.footer`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 100px;
+  width: 100%;
+  background-color: #575757;
+  color: #bebebe;
+`;

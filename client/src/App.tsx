@@ -17,6 +17,11 @@ function App() {
         <AddableTodo />
         <TodoList />
       </sc.Main>
+      <sc.Footer>
+        Todo.
+        <br />
+        by Hampus Engström
+      </sc.Footer>
     </>
   );
 }
