@@ -1,4 +1,4 @@
-# TOD - CLIENT
+# TODO: CLIENT
 
 ## Description
 
@@ -6,41 +6,41 @@ The client part of the application is built in ReactJS with TypeScript and runs 
 
 ## Architecture
 
-The application consists of a set of reusable generic components, features with more todo specific components, utils with a provider for todos.
-Using generic components with no application specific code makes it easier to reuse them between projects instead of writing them for every project.
+The application consists of a set of reusable generic components, features with more todo specific components, and utils with a provider for todos.
+Using generic components with no application-specific code makes it easier to reuse them between projects instead of writing them for every project.
 
-There is a centralized main state of the todos which is held by the TodoContext. It contains the array of todos, functionality for updating todos (adding / deleting / editing) and it also syncs the current state of todos with the server and its storage. The TodoContext is needed due to the wide spread of functionality for adding, editing, filtering, sorting, searching etc, all finally resulting in an updated list.
+There is a centralized main state of the todos, which is held by the TodoContext. It contains the array of todos, functionality for updating todos (adding, editing and deleting), and it also syncs the current state of todos with the server and its storage. The TodoContext is needed due to the wide spread of functionality for adding, editing, filtering, sorting, searching, etc., all finally resulting in an updated list.
 
 ## Layout
 
-The layout consists of header, main, footer
+The layout consists of a header, a main and a footer
 
 - header: contains a logo, filter-, sort- and search functionality
-- main: contains the functionality for adding / editing / deliting a todo, the list of todos and pagination.
+- main: contains the functionality for adding, editing, and deleting a todo, the list of todos and pagination.
 
-- Filter: The filter feature holds the functionality such as filtering and sorting the list of todos. The filter handles filter changes and performs the filtering and sorting operations on the todos which is then provided to the TodoContext.
+* Filter: The filter feature holds the functionality such as filtering and sorting the list of todos. The filter handles filter changes and performs the filtering and sorting operations on the todos, which are then provided to the TodoContext.
 
 It is worth noting that, with more time, I would have investigated the possibility to extract the filtering logic to a FilterContext. I'm not sure yet if it is worth centralizing this at the current state of the application.
 
-The application contains no tests, this was not prioritized from my side due to the provided time and the requirements for the task.
+The application contains no tests; this was not prioritized from my side due to the provided time and the requirements for the task.
 
 ## File structure
 
-The components and features has been divided into several files: interface, styled-components and functional component.
-The features also uses containers to extract logic from the functional (view) components.
+The components and features have been divided into several files: interface, styled components and functional components.
+The features also use containers to extract logic from the functional (view) components.
 
 ### Folder structure
 
-| Folder           | Description                                                                                 |
-| ---------------- | ------------------------------------------------------------------------------------------- |
-| /api             | Client side endpoints for server communcation. This API is only utilized by the TodoContext |
-| /components      | Generic and reusable components with minimal logic                                          |
-| /features        | Extensive components with their own logic and group of specific components                  |
-| /utils/providers | The providers of the application                                                            |
+| Folder           | Description                                                                                   |
+| ---------------- | --------------------------------------------------------------------------------------------- |
+| /api             | Client-side endpoints for server communication. This API is only utilized by the TodoContext. |
+| /components      | Generic and reusable components with minimal logic.                                           |
+| /features        | Extensive components with their own logic and group of specific components.                   |
+| /utils/providers | The providers of the application.                                                             |
 
 ## Getting Started
 
-Install all dependencies
+Install all dependencies.
 
 ```
 $ npm install
@@ -52,10 +52,10 @@ Start the application at port 5173
 $ npm run dev
 ```
 
-To use the client side of the application
+To use the client-side of the application
 Open http://localhost:5173/
 
-# TODO - SERVER
+# TODO: SERVER
 
 ## Description
 
@@ -75,7 +75,7 @@ The controller handles the request by validating incoming data.
 
 - If the validation is unsuccessful, the controller will send a 4xx status back.
 
-- If the validation is successful, the controller will call the model. The model then performs the simple data operations requested to the data in storage, and then send a 200 status back.
+- If the validation is successful, the controller will call the model. The model then performs the simple data operations requested to the data in storage and then sends a 200 status back.
 
 ```
 request -> routes -> controller -> model -> storage
@@ -83,20 +83,18 @@ request -> routes -> controller -> model -> storage
 
 ## File structure
 
-Explanation regarding the file structure
-
 ### Folder structure
 
-| Folder       | Description                                                                                   |
-| ------------ | --------------------------------------------------------------------------------------------- |
-| /controllers | The controllers implements the main logic such as handling requests and responses, validation |
-| /models      | The models implements logic for loading the storage, updating the todos and saving to storage |
-| /storage     | A single .json file storing all todos                                                         |
-|  index       | The file with routing                                                                         |
+| Folder       | Description                                                                                    |
+| ------------ | ---------------------------------------------------------------------------------------------- |
+| /controllers | The controllers implement the main logic, such as handling requests and responses, validation. |
+| /models      | The models implement logic for loading the storage, updating the todos and saving to storage.  |
+| /storage     | A single .json file storing all todos.                                                         |
+|  index       | The file with routing.                                                                         |
 
 ## Getting Started
 
-Install all dependencies
+Install all dependencies.
 
 ```
 $ npm install
