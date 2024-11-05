@@ -8,6 +8,7 @@ export const DateInput = styled.input`
   border-radius: 4px;
   box-sizing: border-box;
   font-size: 14px;
+  font-family: arial, sans-serif;
 `;
 
 export const Label = styled.label`
@@ -16,4 +17,5 @@ export const Label = styled.label`
   gap: 16px;
   align-items: center;
   font-size: 16px;
+  font-family: arial, sans-serif;
 `;

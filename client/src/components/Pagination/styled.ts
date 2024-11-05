@@ -9,6 +9,7 @@ export const PaginationList = styled.ul`
   gap: 5px;
   justify-content: center;
   color: #ffffff;
+  font-family: arial, sans-serif;
 `;
 
 interface PaginationItemProps {

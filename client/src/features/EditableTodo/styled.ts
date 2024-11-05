@@ -28,7 +28,6 @@ export const EditableTodo = styled.div<EditableTodoProps>`
   }
 
   textArea {
-    font-size: 12px;
     width: 100%;
   }
 

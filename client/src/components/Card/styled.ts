@@ -17,6 +17,7 @@ export const Card = styled.div<CardProps>`
   min-height: 125px;
   box-sizing: border-box;
   transition: 0.1s opacity ease-in-out;
+  font-family: arial, sans-serif;
   ${props => (props.$inActive ? 'opacity: 0.5;' : '')}
   &:hover {
     background-color: rgba(255, 255, 255, 0.9);

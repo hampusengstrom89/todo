@@ -15,6 +15,7 @@ export const ErrorMessage = styled.div`
   transform: translateX(-50%);
   color: white;
   z-index: 1;
+  font-family: arial, sans-serif;
 
   h2 {
     margin: 0 0 8px 0;

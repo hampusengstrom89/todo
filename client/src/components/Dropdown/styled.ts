@@ -20,6 +20,7 @@ export const Dropdown = styled.div<DropdownListProps>`
     gap: 8px;
     width: 100%;
     font-size: 16px;
+    font-family: arial, sans-serif;
   }
 `;
 
@@ -48,6 +49,7 @@ export const DropdownList = styled.ul<DropdownListProps>`
       width: 100%;
       text-align: start;
       font-size: 16px;
+      font-family: arial, sans-serif;
     }
   }
 `;
