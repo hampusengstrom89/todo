@@ -10,7 +10,7 @@ export const todos_get = (
 ): void => {
   const todos: IF.Todo[] = Todo.getTodos();
 
-  res.status(200).json({ payload: todos });
+  res.status(200).json({ payload: { todos } });
 };
 
 export const todos_get_todo = (
@@ -30,7 +30,7 @@ export const todos_get_todo = (
   if (todo === null) {
     res.status(404).json({ error: "todo item not found" });
   } else {
-    res.status(200).json({ payload: todo });
+    res.status(200).json({ payload: { todo } });
   }
 };
 
@@ -59,7 +59,7 @@ export const todos_create = (
     dueDate,
   });
 
-  res.status(200).json({ payload: todo });
+  res.status(200).json({ payload: { todo } });
 };
 
 export const todos_update = (
@@ -89,7 +89,7 @@ export const todos_update = (
   if (todo === null) {
     res.status(404).json({ error: "todo item not found" });
   } else {
-    res.status(200).json({ payload: todo });
+    res.status(200).json({ payload: { todo } });
   }
 };
 
@@ -110,6 +110,6 @@ export const todos_delete = (
   if (todo === null) {
     res.status(404).json({ error: "todo item not found" });
   } else {
-    res.status(200).json({ payload: todo });
+    res.status(200).json({ payload: { todo } });
   }
 };
