@@ -8,12 +8,18 @@ import {
 import * as api from '../../api';
 import * as IF from '../../features/Todo/interface';
 import { ErrorMessage } from '../../components/ErrorMessage';
+import { filter, FilterInterface } from './filtering';
+import { SortAttribute, sortAttributes, sortTodos } from './sorting';
 
-interface TodoContextValue {
+export interface TodoContextInterface {
+  allTodos: IF.Todo[];
   todos: IF.Todo[];
-  filteredTodos: IF.Todo[];
   error: string | null;
-  setFilteredTodos: (todos: IF.Todo[]) => void;
+  sortAttr: SortAttribute;
+  filter: FilterInterface;
+  sortAttributes: SortAttribute[];
+  setFilter: (attr: string, value: string | boolean | number | null) => void;
+  setSortAttr: (sortAttr: SortAttribute) => void;
   addTodo: (
     title: IF.Todo['title'],
     description: IF.Todo['description'],
@@ -25,16 +31,24 @@ interface TodoContextValue {
 }
 
 const defaultValue = {
+  allTodos: [],
   todos: [],
-  filteredTodos: [],
+  sortAttr: sortAttributes[0],
+  filter: {
+    completed: false,
+    startDate: null,
+    endDate: null,
+  },
+  sortAttributes: sortAttributes,
   error: null,
-  setFilteredTodos: () => {},
+  setSortAttr: () => {},
+  setFilter: () => {},
   addTodo: () => {},
   deleteTodo: () => {},
   editTodo: () => {},
 };
 
-const TodoContext = createContext<TodoContextValue>(defaultValue);
+const TodoContext = createContext<TodoContextInterface>(defaultValue);
 
 interface ActionInterface {
   type: string;
@@ -42,38 +56,38 @@ interface ActionInterface {
 }
 
 interface StateInterface {
+  allTodos: IF.Todo[];
   todos: IF.Todo[];
-  filteredTodos: IF.Todo[];
   error: string | null;
+  sortAttr: SortAttribute;
+  filter: {};
 }
 
 const reducer = (state: StateInterface, action: ActionInterface) => {
   switch (action.type) {
     case 'SET_INITIAL_TODOS':
-      var { todos } = action.payload;
-      return { ...state, todos: todos, filteredTodos: todos };
+      var { todos: allTodos } = action.payload;
+      var filteredTodos = filter(allTodos, state.filter);
+      var sortedTodos = sortTodos(state.sortAttr, filteredTodos);
+      return { ...state, allTodos, todos: sortedTodos };
 
     case 'ADD_TODO':
       var { todo } = action.payload;
-      return { ...state, todos: [todo, ...state.todos] };
+      return { ...state, allTodos: [todo, ...state.allTodos] };
 
     case 'EDIT_TODO':
       var { todo } = action.payload;
       return {
         ...state,
-        todos: state.todos.map(t => (t.uuid === todo.uuid ? todo : t)),
+        allTodos: state.allTodos.map(t => (t.uuid === todo.uuid ? todo : t)),
       };
 
     case 'DELETE_TODO':
       var { todo } = action.payload;
       return {
         ...state,
-        todos: state.todos.filter(t => t.uuid !== todo.uuid),
+        allTodos: state.allTodos.filter(t => t.uuid !== todo.uuid),
       };
-
-    case 'SET_FILTERED_TODOS':
-      var { todos } = action.payload;
-      return { ...state, filteredTodos: todos };
 
     case 'SET_ERROR':
       var { error } = action.payload;
@@ -81,6 +95,24 @@ const reducer = (state: StateInterface, action: ActionInterface) => {
 
     case 'RESET_ERROR':
       return { ...state, error: null };
+
+    case 'SET_FILTER':
+      var { attr, value } = action.payload;
+      var newFilter = { ...state.filter, [attr]: value };
+      var filteredTodos = filter(state.allTodos, newFilter);
+      var sortedTodos = sortTodos(state.sortAttr, filteredTodos);
+
+      return { ...state, filter: newFilter, todos: sortedTodos };
+
+    case 'SET_SORT_ATTR':
+      var { sortAttr } = action.payload;
+      var sortedTodos = sortTodos(sortAttr, state.todos);
+
+      return {
+        ...state,
+        sortAttr,
+        todos: sortedTodos,
+      };
 
     default:
       return state;
@@ -93,16 +125,22 @@ const TodoProvider = ({
   children: JSX.Element | JSX.Element[];
 }): ReactElement => {
   const [state, dispatch] = useReducer(reducer, {
+    allTodos: [],
     todos: [],
-    filteredTodos: [],
+    sortAttr: sortAttributes[0],
+    filter: {
+      completed: false,
+      startDate: null,
+      endDate: null,
+    },
     error: null,
   });
 
   const dispatchAction = (type: string) => (payload: any) =>
     dispatch({ type, payload });
 
-  const setError = (error: string) => {
-    dispatchAction('SET_ERROR')({ error });
+  const setError = (errorString: string) => (error: any) => {
+    dispatchAction('SET_ERROR')({ error: `${errorString}: ${error.message}` });
     setTimeout(() => dispatchAction('RESET_ERROR')(null), 2000);
   };
 
@@ -110,53 +148,56 @@ const TodoProvider = ({
     api
       .getTodos()
       .then(dispatchAction('SET_INITIAL_TODOS'))
-      .catch(error =>
-        setError(`Something went wrong while loading todos: ${error.message}`),
-      );
+      .catch(setError(`Something went wrong while loading todos`));
   };
 
-  const addTodo = (
-    title: IF.Todo['title'],
-    description: IF.Todo['description'],
-    completed: IF.Todo['completed'],
-    dueDate: IF.Todo['dueDate'],
+  const addTodo: TodoContextInterface['addTodo'] = (
+    title,
+    description,
+    completed,
+    dueDate,
   ) => {
     api
       .addTodo(title, description, completed, dueDate)
       .then(dispatchAction('ADD_TODO'))
-      .catch(error =>
-        setError(`Something went wrong when creating todo: ${error.message}`),
-      );
+      .catch(setError(`Something went wrong when creating todo`));
   };
 
-  const deleteTodo = (uuid: IF.Todo['uuid']) => {
+  const deleteTodo: TodoContextInterface['deleteTodo'] = uuid => {
     api
       .deleteTodo(uuid)
       .then(dispatchAction('DELETE_TODO'))
-      .catch(error =>
-        setError(`Something went wrong when deleting todo: ${error.message}`),
-      );
+      .catch(setError(`Something went wrong when deleting todo`));
   };
 
-  const editTodo = (todo: IF.Todo) => {
+  const editTodo: TodoContextInterface['editTodo'] = todo => {
     api
       .editTodo(todo)
       .then(dispatchAction('EDIT_TODO'))
-      .catch(error =>
-        setError(`Something went wrong when editing todo: ${error.message}`),
-      );
+      .catch(setError(`Something went wrong when editing todo`));
   };
 
-  const setFilteredTodos = (todos: IF.Todo[]) =>
-    dispatchAction('SET_FILTERED_TODOS')({ todos });
+  const setFilter: TodoContextInterface['setFilter'] = (attr, value) => {
+    dispatch({ type: 'SET_FILTER', payload: { attr, value } });
+  };
+
+  const setSortAttr: TodoContextInterface['setSortAttr'] = (
+    sortAttr: SortAttribute,
+  ) => {
+    dispatch({ type: 'SET_SORT_ATTR', payload: { sortAttr } });
+  };
 
   useEffect(() => {
     fetchTodos();
   }, []);
 
-  const value: TodoContextValue = {
+  useEffect(() => console.log(state), [state]);
+
+  const value: TodoContextInterface = {
     ...state,
-    setFilteredTodos,
+    sortAttributes,
+    setFilter,
+    setSortAttr,
     addTodo,
     deleteTodo,
     editTodo,

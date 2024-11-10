@@ -4,14 +4,17 @@ import TextInput from '../../components/TextInput';
 import { Dropdown } from '../../components/Dropdown/Dropdown';
 import * as sc from './styled';
 import { ReactElement } from 'react';
-import { FilterInterface, SortOptions } from './FilterContainer';
+import { FilterInterface } from '../../utils/providers/filtering';
+import { SortAttribute } from '../../utils/providers/sorting';
 
 export const Filter = (
-  handleChange: (attr: string) => (value: string | boolean | number) => void,
-  sortByAttr: SortOptions,
+  handleChange: (
+    attr: string,
+  ) => (value: string | boolean | number | null) => void,
+  sortAttr: SortAttribute,
   handleSortChange: (value: string) => void,
-  sortOptions: SortOptions[],
-  filters: FilterInterface,
+  sortAttributes: SortAttribute[],
+  filter: FilterInterface,
 ): ReactElement => (
   <>
     <sc.Filter>
@@ -20,7 +23,7 @@ export const Filter = (
           <Checkbox
             label="Completed"
             onChange={handleChange('completed')}
-            checked={filters.completed}
+            checked={filter.completed}
           />
         </sc.FilterCompleted>
 
@@ -44,9 +47,9 @@ export const Filter = (
 
       <sc.SortArea>
         <Dropdown
-          activeOption={sortByAttr}
+          activeOption={sortAttr}
           onChange={handleSortChange}
-          options={sortOptions}
+          options={sortAttributes}
         />
       </sc.SortArea>
     </sc.Filter>

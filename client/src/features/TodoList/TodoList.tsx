@@ -6,9 +6,9 @@ import { useTodos } from '../../utils/providers/TodoContext';
 import Pagination from '../../components/Pagination';
 
 export const TodoList = (): ReactElement => {
-  const { filteredTodos }: { filteredTodos: IF.Todo[] } = useTodos();
+  const { todos }: { todos: IF.Todo[] } = useTodos();
   return (
-    <Pagination hits={10} items={filteredTodos}>
+    <Pagination hits={10} items={todos}>
       {items => (
         <List items={items}>
           {todo => (
