@@ -73,7 +73,13 @@ const reducer = (state: StateInterface, action: ActionInterface) => {
 
     case 'ADD_TODO':
       var { todo } = action.payload;
-      return { ...state, allTodos: [todo, ...state.allTodos] };
+      var filteredTodos = filter(allTodos, state.filter);
+      var sortedTodos = sortTodos(state.sortAttr, filteredTodos);
+      return {
+        ...state,
+        allTodos: [todo, ...state.allTodos],
+        todos: sortedTodos,
+      };
 
     case 'EDIT_TODO':
       var { todo } = action.payload;
