@@ -1,5 +1,5 @@
 export interface DateInput {
-  onChange: (value: number) => void;
+  onChange: (value: number | null) => void;
   value?: string;
   name?: string;
   disabled?: boolean;

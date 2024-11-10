@@ -3,7 +3,11 @@ import * as sc from './styled';
 
 export const DateInput = (props: IF.DateInput) => {
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    props.onChange(new Date(event.currentTarget.value).getTime());
+    props.onChange(
+      event.currentTarget.value
+        ? new Date(event.currentTarget.value).getTime()
+        : null,
+    );
   };
 
   return (
