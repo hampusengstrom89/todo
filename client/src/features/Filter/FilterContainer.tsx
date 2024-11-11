@@ -1,9 +1,6 @@
 import { ReactElement } from 'react';
-import {
-  TodoContextInterface,
-  useTodos,
-} from '../../utils/providers/TodoContext';
 import { Filter } from './Filter';
+import { useTodos, TodoContextInterface } from '../../utils/providers';
 
 export const FilterContainer = (): ReactElement => {
   const {

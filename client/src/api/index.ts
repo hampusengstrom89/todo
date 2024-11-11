@@ -26,16 +26,11 @@ export const editTodo = (todo: IF.Todo) =>
     })
     .then(getPayload);
 
-export const addTodo = (
-  title: IF.Todo['title'],
-  description: IF.Todo['description'],
-  completed: IF.Todo['completed'],
-  dueDate: IF.Todo['dueDate'],
-) =>
+export const addTodo = (todoDraft: IF.TodoDraft) =>
   fetch(`${BASE_URL}/todos`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title, description, completed, dueDate }),
+    body: JSON.stringify(todoDraft),
   })
     .then(toJSON)
     .then(result => {

@@ -16,22 +16,15 @@ export const AddableTodoContainer = () => {
   const {
     addTodo,
   }: {
-    addTodo: (
-      title: IF.Todo['title'],
-      description: IF.Todo['description'],
-      completed: IF.Todo['completed'],
-      dueDate: IF.Todo['dueDate'],
-    ) => void;
+    addTodo: (todoDraft: IF.TodoDraft) => void;
   } = useTodos();
   const [isCreating, setIsCreating] = useState<boolean>(false);
 
-  const handleComplete = (
-    title: IF.Todo['title'],
-    description: IF.Todo['description'],
-    completed: IF.Todo['completed'],
-    dueDate: IF.Todo['dueDate'],
-  ): void => {
-    addTodo(title, description, completed, new Date(dueDate).getTime());
+  const handleComplete = (todoDraft: IF.TodoDraft): void => {
+    addTodo({
+      ...todoDraft,
+      dueDate: new Date(todoDraft.dueDate).getTime(),
+    });
     setIsCreating(false);
   };
 

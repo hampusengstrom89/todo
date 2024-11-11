@@ -38,13 +38,8 @@ export const TodoContainer = (todo: IF.Todo): ReactElement => {
 
   const handleDeleteClick = () => deleteTodo(todo.uuid);
 
-  const handleComplete = (
-    title: IF.Todo['title'],
-    description: IF.Todo['description'],
-    completed: IF.Todo['completed'],
-    dueDate: IF.Todo['dueDate'],
-  ) => {
-    editTodo({ ...todo, title, description, completed, dueDate });
+  const handleComplete = (todoDraft: IF.TodoDraft) => {
+    editTodo({ ...todo, ...todoDraft });
     setIsEdit(false);
   };
 

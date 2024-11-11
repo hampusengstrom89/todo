@@ -1,53 +1,43 @@
-import { EditableTodo, NewTodoInterface } from './EditableTodo';
+import { EditableTodo } from './EditableTodo';
 import * as IF from '../Todo/interface';
 import { ReactElement, useState } from 'react';
 
 interface EditableTodoProps {
-  title: IF.Todo['title'];
-  description: IF.Todo['description'];
-  completed: IF.Todo['completed'];
-  dueDate: IF.Todo['dueDate'];
-  onComplete: (
-    title: IF.Todo['title'],
-    description: IF.Todo['description'],
-    completed: IF.Todo['completed'],
-    dueDate: IF.Todo['dueDate'],
-  ) => void;
+  title: IF.TodoDraft['title'];
+  description: IF.TodoDraft['description'];
+  completed: IF.TodoDraft['completed'];
+  dueDate: IF.TodoDraft['dueDate'];
+  onComplete: (todoDraft: IF.TodoDraft) => void;
   handleDeleteClick: () => void;
 }
 
 export const EditableTodoContainer = (
   props: EditableTodoProps,
 ): ReactElement => {
-  const isValid = (
-    title: IF.Todo['title'],
-    description: IF.Todo['description'],
-    completed: IF.Todo['completed'],
-    dueDate: IF.Todo['dueDate'],
-  ) => Boolean(typeof title === 'string' && title.length > 0 && dueDate);
+  const isValid = (todoDraft: IF.TodoDraft) =>
+    Boolean(
+      typeof todoDraft.title === 'string' &&
+        todoDraft.title.length > 0 &&
+        todoDraft.dueDate,
+    );
 
-  const onComplete = (
-    title: IF.Todo['title'],
-    description: IF.Todo['description'],
-    completed: IF.Todo['completed'],
-    dueDate: IF.Todo['dueDate'],
-  ): boolean => {
-    if (isValid(title, description, completed, dueDate)) {
-      props.onComplete(title, description, completed, dueDate);
+  const onComplete = (todoDraft: IF.TodoDraft): boolean => {
+    if (isValid(todoDraft)) {
+      props.onComplete(todoDraft);
       return false;
     }
     return false;
   };
 
-  const [newTodo, setNewTodo] = useState<NewTodoInterface>({
+  const [newTodo, setNewTodo] = useState<IF.TodoDraft>({
     title: props.title,
     description: props.description,
     completed: props.completed,
     dueDate: props.dueDate,
   });
 
-  const handleChange = (attr: string) => (value: string | number) => {
-    setNewTodo(newTodo => ({ ...newTodo, [attr]: value }));
+  const handleChange = (attr: string) => (value: string | number | null) => {
+    setNewTodo((newTodo: IF.TodoDraft) => ({ ...newTodo, [attr]: value }));
   };
 
   return (

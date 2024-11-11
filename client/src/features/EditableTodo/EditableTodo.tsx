@@ -10,22 +10,10 @@ import DateInput from '../../components/DateInput';
 import { getReadableDate } from '../../utils/helpers';
 import Card from '../../components/Card';
 
-export interface NewTodoInterface {
-  title: IF.Todo['title'];
-  description: IF.Todo['description'];
-  completed: IF.Todo['completed'];
-  dueDate: IF.Todo['dueDate'];
-}
-
 interface EditableTodoProps {
-  newTodo: NewTodoInterface;
-  handleChange: (attr: string) => (value: string | number) => void;
-  onComplete: (
-    title: IF.Todo['title'],
-    description: IF.Todo['description'],
-    completed: IF.Todo['completed'],
-    dueDate: IF.Todo['dueDate'],
-  ) => boolean;
+  newTodo: IF.TodoDraft;
+  handleChange: (attr: string) => (value: string | number | null) => void;
+  onComplete: (todoDraft: IF.TodoDraft) => boolean;
   handleDeleteClick: () => void;
 }
 
@@ -34,8 +22,7 @@ export const EditableTodo = (props: EditableTodoProps): ReactElement => {
   const { newTodo, handleChange, handleDeleteClick, onComplete } = props;
 
   const handleDoneClick = () => {
-    const { title, description, completed, dueDate } = newTodo;
-    const didComplete = onComplete(title, description, completed, dueDate);
+    const didComplete = onComplete(newTodo);
     if (!didComplete) {
       $editableTodoRef.current?.classList.add('error');
       setTimeout(
