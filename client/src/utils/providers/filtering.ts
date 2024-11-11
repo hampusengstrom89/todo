@@ -1,5 +1,5 @@
-import { TodoContextInterface } from './TodoContext';
 import * as IF from '../../features/Todo/interface';
+import { TodoContextInterface } from './';
 
 export interface FilterInterface {
   [key: string]: any;
